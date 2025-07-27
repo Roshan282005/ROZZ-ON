@@ -23,7 +23,7 @@ $firebaseKey = $_ENV['FIREBASE_API_KEY'];
       <img src="Rozz.png" alt="logo" width="80px">
     </a>
   </center>
-  <h1 class="form-title" style="color: rgb(21, 21, 141);">SIGN IN</h1>
+  <h1 class="form-title" style="color: rgb(21, 21, 141); text-decoration:0 2px 35px 10px rgba(58, 133, 246, 0.9);">SIGN IN</h1>
   <form id="loginForm">
     <div class="input-group">
       <i class="fas fa-envelope"></i>

@@ -110,14 +110,15 @@
                         const loadInForm=document.getElementById('load');
                         const logUpForm=document.getElementById('log');
 
-logUpButton.addEventListener('click',function(){
-    loadInForm.style.display="none";
-    logUpForm.style.display="block";
-})
-loadInButton.addEventListener('click', function(){
-    loadInForm.style.display="block";
-    logUpForm.style.display="none";
-})
+                       logUpButton.addEventListener('click',function(){
+                       loadInForm.style.display="none";
+                       logUpForm.style.display="block";
+                        })
+                        // When the user clicks on the button, open the modal
+                      loadInButton.addEventListener('click', function(){
+                      loadInForm.style.display="block";
+                      logUpForm.style.display="none";
+                       })
                     </script>
                 <div class="searchbar" style=" display: inline; " >
                     <input id="input" class="truncate" autocomplete="off" spellcheck="false" role="combobox" aria-controls="matches" aria-expanded="false"
