@@ -77,7 +77,9 @@
   </form>
   <p class="or">Or</p>
   <div class="icons">
-    <i id="googleSignUpBtn" class="fab fa-google"></i>
+    <label for="googleSignUpBtn">
+      <i id="googleSignUpBtn" class="fab fa-google"></i>Google
+    </label>
   </div>
   <div class="links">
     <p style="color: rgb(59, 59, 255);">Already Have Account?</p>
