@@ -1,20 +1,29 @@
 <?php
+header("Content-Type: application/json");
 require 'connect.php';
 
+// Get JSON input
 $data = json_decode(file_get_contents("php://input"), true);
-$uid = $data['uid'];
-$name = $data['name'];
+
+// Validate input
+if (!$data || !isset($data['uid'], $data['name'], $data['email'])) {
+    echo json_encode(["status" => "error", "message" => "❌ Invalid data!"]);
+    exit();
+}
+
+$uid   = $data['uid'];
+$name  = $data['name'];
 $email = $data['email'];
 
-$stmt = $conn->prepare("INSERT INTO firebase_users (uid, name, email, login_count, created_at, last_login)
-                        VALUES (?, ?, ?, 1, NOW(), NOW())
-                        ON DUPLICATE KEY UPDATE
-                            login_count = login_count + 1,
-                            last_login = NOW()");
+// Insert or update user
+$stmt = $conn->prepare("INSERT INTO firebase_users (uid, name, email, logins, last_login)
+                        VALUES (?, ?, ?, 1, NOW())
+                        ON DUPLICATE KEY UPDATE logins = logins + 1, last_login = NOW()");
 $stmt->bind_param("sss", $uid, $name, $email);
+
 if ($stmt->execute()) {
-    echo "✅ Google user saved!";
+    echo json_encode(["status" => "success", "message" => "✅ User saved"]);
 } else {
-    echo "❌ Error: " . $stmt->error;
+    echo json_encode(["status" => "error", "message" => "❌ DB Error: " . $stmt->error]);
 }
 ?>

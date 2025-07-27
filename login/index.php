@@ -1,3 +1,8 @@
+<?php
+require_once 'connect.php';
+$firebaseKey = $_ENV['FIREBASE_API_KEY'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -251,6 +256,13 @@ document.addEventListener("DOMContentLoaded", function () {
     this.classList.toggle("fa-eye-slash");
   });
 });
+</script>
+<script>
+  const FIREBASE_API_KEY = "<?php echo $_ENV['FIREBASE_API_KEY']; ?>";
+</script>
+<script>
+  const FIREBASE_API_KEY = "<?php echo $firebaseKey; ?>";
+  console.log("Firebase Key:", FIREBASE_API_KEY);
 </script>
 
 </body>

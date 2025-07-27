@@ -8,7 +8,7 @@ if ($conn->connect_error) {
     echo json_encode(["message" => "DB connection failed"]);
     exit();
 }
-
+$firebaseKey = $_ENV['FIREBASE_API_KEY'];
 $uid = $conn->real_escape_string($data->uid);
 $email = $conn->real_escape_string($data->email);
 $first_name = $conn->real_escape_string($data->first_name);

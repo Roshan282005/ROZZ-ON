@@ -1,7 +1,12 @@
 <?php
 require 'connect.php';
+require_once 'connect.php';
+
+$firebaseKey = $_ENV['FIREBASE_API_KEY'];
+echo "Your Firebase Key is: " . $firebaseKey;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firebaseKey = $_ENV['FIREBASE_API_KEY'];
     $email    = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
     $fName    = $_POST['fName'] ?? 'Manual';
