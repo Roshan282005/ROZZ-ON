@@ -1,29 +1,37 @@
 <?php
 header("Content-Type: application/json");
-require 'connect.php';
 
-// Get JSON input
 $data = json_decode(file_get_contents("php://input"), true);
-
-// Validate input
-if (!$data || !isset($data['uid'], $data['name'], $data['email'])) {
-    echo json_encode(["status" => "error", "message" => "❌ Invalid data!"]);
+if (!$data || !isset($data['email'], $data['first_name'], $data['last_name'])) {
+    echo json_encode(["status" => "error", "message" => "Invalid input"]);
     exit();
 }
 
-$uid   = $data['uid'];
-$name  = $data['name'];
-$email = $data['email'];
+$conn = new mysqli("localhost", "root", "", "login");
+if ($conn->connect_error) {
+    echo json_encode(["status" => "error", "message" => "DB connection failed"]);
+    exit();
+}
 
-// Insert or update user
-$stmt = $conn->prepare("INSERT INTO firebase_users (uid, name, email, logins, last_login)
-                        VALUES (?, ?, ?, 1, NOW())
-                        ON DUPLICATE KEY UPDATE logins = logins + 1, last_login = NOW()");
-$stmt->bind_param("sss", $uid, $name, $email);
+// Assign values
+$uid = isset($data['uid']) ? $data['uid'] : null;
+$email = $data['email'];
+$first = $data['first_name'];
+$last = $data['last_name'];
+$password = isset($data['password']) ? password_hash($data['password'], PASSWORD_DEFAULT) : null;
+
+// Prepare insert/update
+$stmt = $conn->prepare("
+    INSERT INTO firebase_users (uid, email, first_name, last_name, password, login_count, created_at)
+    VALUES (?, ?, ?, ?, ?, 1, NOW())
+    ON DUPLICATE KEY UPDATE login_count = login_count + 1
+");
+
+$stmt->bind_param("sssss", $uid, $email, $first, $last, $password);
 
 if ($stmt->execute()) {
-    echo json_encode(["status" => "success", "message" => "✅ User saved"]);
+    echo json_encode(["status" => "success"]);
 } else {
-    echo json_encode(["status" => "error", "message" => "❌ DB Error: " . $stmt->error]);
+    echo json_encode(["status" => "error", "message" => $stmt->error]);
 }
 ?>

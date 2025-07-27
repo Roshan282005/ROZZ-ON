@@ -1,40 +1,33 @@
 <?php
-require 'connect.php';
 require_once 'connect.php';
 
-$firebaseKey = $_ENV['FIREBASE_API_KEY'];
-echo "Your Firebase Key is: " . $firebaseKey;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firebaseKey = $_ENV['FIREBASE_API_KEY'];
-    $email    = $_POST['email'] ?? '';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $fName = $_POST['fName'] ?? '';
+    $lName = $_POST['lName'] ?? '';
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
-    $fName    = $_POST['fName'] ?? 'Manual';
-    $lName    = $_POST['lName'] ?? 'User';
-    $uid      = uniqid("manual_");
-    $name     = $fName . " " . $lName;
 
-    // Check if user exists
-    $check = $conn->prepare("SELECT id FROM firebase_users WHERE email = ?");
-    $check->bind_param("s", $email);
-    $check->execute();
-    $check->store_result();
-
-    if ($check->num_rows > 0) {
-        echo "⚠️ User already registered.";
-        exit;
+    if (empty($fName) || empty($lName) || empty($email) || empty($password)) {
+        echo "❌ All fields are required.";
+        exit();
     }
 
-    $stmt = $conn->prepare("INSERT INTO firebase_users (uid, name, email, password, login_count, created_at, last_login)
-                            VALUES (?, ?, ?, ?, 1, NOW(), NOW())");
-    $stmt->bind_param("ssss", $uid, $name, $email, $password);
+    $uid = uniqid("manual_");
+    $name = $fName . ' ' . $lName;
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $stmt = $conn->prepare("INSERT INTO firebase_users (uid, name, email, password, login_count, created_at, last_login) VALUES (?, ?, ?, ?, 1, NOW(), NOW())");
+    $stmt->bind_param("ssss", $uid, $name, $email, $hashedPassword);
+
     if ($stmt->execute()) {
-        echo "✅ Manual user registered!";
+        echo "✅ Manual registration successful!";
     } else {
         echo "❌ Error: " . $stmt->error;
     }
 
     $stmt->close();
     $conn->close();
+} else {
+    echo "❌ Invalid request.";
 }
 ?>

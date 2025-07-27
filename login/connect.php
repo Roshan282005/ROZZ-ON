@@ -1,23 +1,24 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Load .env for local development
-if (file_exists(__DIR__ . '/.env')) {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-    $dotenv->load();
-}
+use Dotenv\Dotenv;
 
-// Read environment variables
-$host = $_ENV['DB_HOST'] ?? 'localhost';
-$user = $_ENV['DB_USER'] ?? 'root';
-$pass = $_ENV['DB_PASS'] ?? '';
-$db   = $_ENV['DB_NAME'] ?? 'login';
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-// Create MySQL connection
+$host = $_ENV['DB_HOST'];
+$user = $_ENV['DB_USER'];
+$pass = $_ENV['DB_PASS'];
+$db   = $_ENV['DB_NAME'];
+
 $conn = new mysqli($host, $user, $pass, $db);
 
-// Check for errors
+// Check connection
 if ($conn->connect_error) {
-    die("❌ Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Optional: Access Firebase API key
+$firebaseKey = $_ENV['FIREBASE_API_KEY'];
 ?>
+

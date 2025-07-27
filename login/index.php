@@ -6,13 +6,13 @@ $firebaseKey = $_ENV['FIREBASE_API_KEY'];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register & Login</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register & Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
 <body>
 <p id="status"></p>
@@ -82,9 +82,15 @@ $firebaseKey = $_ENV['FIREBASE_API_KEY'];
   </form>
   <p class="or">Or</p>
   <div class="icons">
-    <label for="googleSignUpBtn">
-      <i id="googleSignUpBtn" class="fab fa-google"></i>Google
-    </label>
+      <i id="googleSignUpBtn" class="fab fa-google"></i><br>
+      <span style="font-family: 'Product Sans', sans-serif;">
+      <span style="color: #4285F4;">G</span>
+      <span style="color: #EA4335;">o</span>
+      <span style="color: #FBBC05;">o</span>
+      <span style="color: #4285F4;">g</span>
+      <span style="color: #34A853;">l</span>
+      <span style="color: #EA4335;">e</span>
+      </span>
   </div>
   <div class="links">
     <p style="color: rgb(59, 59, 255);">Already Have Account?</p>
@@ -92,177 +98,146 @@ $firebaseKey = $_ENV['FIREBASE_API_KEY'];
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import {
-    getAuth,
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword,
-    GoogleAuthProvider,
-    signInWithPopup,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
-    authDomain: "rizzauthapp.firebaseapp.com",
-    projectId: "rizzauthapp",
-    storageBucket: "rizzauthapp.firebasestorage.app",
-    messagingSenderId: "607508317395",
-    appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
-    measurementId: "G-2YQFBWK95F"
-  };
+const firebaseConfig = {
+  apiKey: "<?php echo $firebaseKey; ?>",
+  authDomain: "rizzauthapp.firebaseapp.com",
+  projectId: "rizzauthapp",
+  storageBucket: "rizzauthapp.appspot.com",
+  messagingSenderId: "607508317395",
+  appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
+  measurementId: "G-2YQFBWK95F"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const provider = new GoogleAuthProvider();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
-  // 🔐 Sign Up (Email + Password)
-  document.getElementById("registerForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const email = document.getElementById("registerEmail").value;
-    const password = document.getElementById("registerPassword").value;
-    const fName = document.getElementById("fName").value;
-    const lName = document.getElementById("lName").value;
-    const fullName = fName + " " + lName;
+// Manual Signup
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fName = document.getElementById("fName").value;
+  const lName = document.getElementById("lName").value;
+  const email = document.getElementById("registerEmail").value;
+  const password = document.getElementById("registerPassword").value;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+  try {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    const user = result.user;
 
-        // Save to MySQL
-        fetch("signup.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            uid: user.uid,
-            name: fullName,
-            email: user.email,
-            password: password
-          })
-        })
-        .then(res => res.json())
-        .then(msg => {
-          console.log("✅ MySQL response:", msg);
-          alert("✅ Signed up & saved!");
-          window.location.href = "http://localhost/roshans/index.html";
-        });
+    await fetch("signup.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        uid: user.uid,
+        email,
+        password,
+        first_name: fName,
+        last_name: lName
       })
-      .catch((error) => {
-        alert("❌ Signup error: " + error.message);
-      });
-  });
+    });
 
-  // 🔐 Sign In (Email + Password)
-  document.getElementById("loginForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const email = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
+    alert("✅ Signup successful");
+    window.location.href = "http://localhost/Roshans/index.html";
+  } catch (err) {
+    alert("❌ Signup error: " + err.message);
+  }
+});
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+// Manual Login
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
 
-        // Track login (update count & last_login)
-        fetch("track-login.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            uid: user.uid,
-            email: user.email,
-            name: user.displayName || "Firebase User",
-            password: password
-          })
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log("📊 Login tracked:", data);
-          alert("🎉 Welcome back " + (user.displayName || user.email));
-          window.location.href = "http://localhost/roshans/index.html";
-        });
+  try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
+
+    await fetch("track-login.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName || "Manual User"
       })
-      .catch((error) => {
-        alert("❌ Login failed: " + error.message);
-      });
-  });
+    });
 
-  // 🔐 Google Sign In
-  document.getElementById("googleSignUpBtn").addEventListener("click", () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
+    alert("🎉 Welcome back");
+    window.location.href = "http://localhost/Roshans/index.html";
+  } catch (err) {
+    alert("❌ Login failed: " + err.message);
+  }
+});
 
-        fetch("save-user.php", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            uid: user.uid,
-            name: user.displayName,
-            email: user.email
-          })
-        })
-        .then(res => res.text())
-        .then(data => {
-          console.log("✅ Google user saved:", data);
-          alert("🎉 Welcome " + user.displayName);
-          window.location.href = "http://localhost/roshans/index.html";
-        });
+// Google Login
+document.getElementById("googleSignUpBtn").addEventListener("click", async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    const [first_name, ...rest] = user.displayName?.split(" ") ?? ["Google"];
+    const last_name = rest.join(" ") || "";
+
+    await fetch("save-user.php", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        uid: user.uid,
+        email: user.email,
+        first_name,
+        last_name
       })
-      .catch((error) => {
-        alert("❌ Google Sign-In failed: " + error.message);
-      });
-  });
+    });
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("✅ Signed in as:", user.email);
-    }
-  });
+    alert("🎉 Welcome " + user.displayName);
+    window.location.href = "http://localhost/Roshans/index.html";
+  } catch (err) {
+    alert("❌ Google Sign-In failed: " + err.message);
+  }
+});
 </script>
 
 <script>
-  document.getElementById('showSignUp').onclick = function () {
-    document.getElementById('signInForm').style.display = 'none';
-    document.getElementById('signUpForm').style.display = 'block';
-  };
-  document.getElementById('showSignIn').onclick = function () {
-    document.getElementById('signUpForm').style.display = 'none';
-    document.getElementById('signInForm').style.display = 'block';
-  };
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+// Toggle forms
+document.getElementById('showSignUp').onclick = () => {
+  document.getElementById('signInForm').style.display = 'none';
+  document.getElementById('signUpForm').style.display = 'block';
+};
+document.getElementById('showSignIn').onclick = () => {
+  document.getElementById('signUpForm').style.display = 'none';
+  document.getElementById('signInForm').style.display = 'block';
+};
+
+// Toggle password visibility
+document.addEventListener("DOMContentLoaded", () => {
   const loginPassword = document.getElementById("loginPassword");
   const togglePassword = document.getElementById("togglePassword");
-
   const registerPassword = document.getElementById("registerPassword");
   const toggleRegisterPassword = document.getElementById("toggleRegisterPassword");
 
-  // Login toggle
-  togglePassword?.addEventListener("click", function () {
-    const isHidden = loginPassword.type === "password";
-    loginPassword.type = isHidden ? "text" : "password";
-    this.classList.toggle("fa-eye");
-    this.classList.toggle("fa-eye-slash");
+  togglePassword?.addEventListener("click", () => {
+    loginPassword.type = loginPassword.type === "password" ? "text" : "password";
+    togglePassword.classList.toggle("fa-eye");
+    togglePassword.classList.toggle("fa-eye-slash");
   });
 
-  // Register toggle
-  toggleRegisterPassword?.addEventListener("click", function () {
-    const isHidden = registerPassword.type === "password";
-    registerPassword.type = isHidden ? "text" : "password";
-    this.classList.toggle("fa-eye");
-    this.classList.toggle("fa-eye-slash");
+  toggleRegisterPassword?.addEventListener("click", () => {
+    registerPassword.type = registerPassword.type === "password" ? "text" : "password";
+    toggleRegisterPassword.classList.toggle("fa-eye");
+    toggleRegisterPassword.classList.toggle("fa-eye-slash");
   });
 });
-</script>
-<script>
-  const FIREBASE_API_KEY = "<?php echo $_ENV['FIREBASE_API_KEY']; ?>";
-</script>
-<script>
-  const FIREBASE_API_KEY = "<?php echo $firebaseKey; ?>";
-  console.log("Firebase Key:", FIREBASE_API_KEY);
 </script>
 
 </body>
