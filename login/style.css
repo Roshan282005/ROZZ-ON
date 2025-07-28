@@ -61,6 +61,14 @@ label{
     color:#d1cece;
     position:relative;
     left:1.2em;
+}
+input::placeholder{
+    color:transparent;
+}
+label{
+    color:#d1cece;
+    position:relative;
+    left:1.2em;
     top:-1.3em;
     cursor:auto;
     transition:0.1s ease all;
@@ -86,7 +94,7 @@ input:focus~label,input:not(:placeholder-shown)~label{
 }
 .btn{
     font-size:1.1rem;
-    box-shadow: ;
+    box-shadow:5% ;
     padding:8px 0;
     border-radius:5px;
     outline:none;
