@@ -51,8 +51,8 @@ input{
 }
 input:focus{
     background-color: transparent;
-    outline:transparent;
-    border-bottom:2px solid hsl(327,90%,28%);
+    outline: transparent;
+    border-bottom: 2px solid rgb(327, 90%, 28%);
 }
 input::placeholder{
     color:transparent;
