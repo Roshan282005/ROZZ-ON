@@ -1,0 +1,369 @@
+*{
+   margin: 0;
+}
+nav{
+  justify-content: center;
+}
+h1{
+   cursor: pointer;
+   max-width: 60px;
+   font-size:xx-large;
+}
+ h1:hover{
+   color:gray;
+
+ }
+ nav{
+  
+    border-radius:10px;
+    box-shadow:0 20px 35px rgba(0,0,1,0.4);
+
+
+
+
+
+  background-color: #e4e9f9;
+  background:linear-gradient(to right,#cdd5f0 ,azure, #e9cccc);
+  border-radius: 20px;
+    color: black;
+    padding: 0;
+    justify-content: space-around;
+    box-shadow: #2f3336;
+    font-family: "Orbitron", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  
+ }
+ .monoton-regular {
+      font-family: "Orbitron", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+     }
+    
+
+ body{
+  background-color: rgba(50, 50, 50, 0.2); /* lighter dark gray */
+  opacity: 0.5s ease;
+  
+   .monoton-regular {
+      font-family: "Monoton", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      border-radius: 1rem;
+    }
+    
+ }
+ li,h1,ul{
+   display: inline;
+ }
+ ul{
+   width: 50px;
+   margin-left: 0px;
+ }
+ li{
+   color:black;
+   cursor: pointer;
+   margin: left 50%;
+   size: 50%;
+   display: inline-block;
+   width:max-content;
+ }
+ li:hover{
+   color: lightsteelblue;
+   transform: translate(-45deg);
+ }
+ input{
+   width: 40%;
+   padding: 10px;
+   text-align: center;
+   justify-content: left ;
+   bottom: 50px;
+   border-radius: 25px;
+   
+ }
+ .searchbar{
+   padding: 30px;
+   margin-left: 300px;
+   align-items: center;
+   
+ }
+.img{
+  width: 80px;
+  justify-content: space-around;
+    box-shadow: #2f3336;
+}
+.box{
+  display: inline-flex;
+  padding: 18px;
+  flex-wrap: wrap ;
+  cursor: pointer;
+  justify-content: space-around;
+    box-shadow: #2f3336;
+}
+div.box{
+  width: 160px;
+  justify-content: space-around;
+    box-shadow: #2f3336;
+  
+}
+.box:hover{
+  background-color: darkgray;
+  box-sizing: 2rem;
+  border-radius: 2rem;
+}
+.head{
+  background-color: white;
+  
+}
+div.h1{
+  background-color: black;
+  margin-right: 60%;
+}
+.p{
+  width: 10px;
+  display: inline-block;
+}
+h4{
+  cursor: pointer;
+  justify-content: end;
+}
+h4:hover{
+  box-sizing: content-box;
+}
+.product{
+  justify-content: space-around;
+}
+div.product{
+  display: flex;
+}
+div.details{
+  padding: 30px;
+}
+h5{
+  text-align: center;
+  padding: 30px;
+  cursor: default;
+}
+ol{
+  display: block ;
+  padding-top: 15px;
+}
+details{
+  text-align: center;
+  cursor: pointer;
+}
+/* base styles */
+
+/*p:hover{
+  color: cornsilk;
+  
+}*/
+
+
+
+/* off-screen-menu */
+.off-screen-menu:hover{
+  color: #2f3336;
+}
+.off-screen-menu.active:hover{
+  color: #2f3336;
+}
+.off-screen-menu {
+  color: black;
+  background-color:rgb(233, 241, 241);
+  border-radius: 2rem;
+  opacity: 90%;
+  height: 78vh;
+  width: 40%;
+  max-width: 250px;
+  position: fixed;
+  top: 10px;
+  right:-0;
+  right: -450px;
+  display: flex;
+  flex-direction: column;
+  align-items: right;    
+  justify-content: left;
+  text-align: center ;
+  font-size: 2rem;
+  transition: .3s ease;
+}
+.off-screen-menu.active {
+  right: 0;
+  margin-left: 40px;
+  width: 200px;
+}
+
+
+
+
+
+/* ham menu */
+.ham-menu {
+  height: 40px;
+  width: 40px;
+  margin-left: 97%;
+  position: fixed;
+  
+}
+.ham-menu span:hover{
+  color: white;
+}
+.ham-menu span {
+  cursor: pointer;
+  height: 5px;
+  width: 80%;
+  background-color: #030000;
+  border-radius: 25px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: 1ms ease;
+}
+.ham-menu span:nth-child(1) {
+  top: 25%;
+}
+.ham-menu span:nth-child(2) {
+  top: 50%;
+}
+.ham-menu span:nth-child(3) {
+  top: 75%;
+}
+.ham-menu.active span {
+  background-color: black;
+  
+}
+.ham-menu.active span:nth-child(1) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.ham-menu.active span:nth-child(2) {
+  opacity: 0;
+}
+.ham-menu.active span:nth-child(3) {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+ul.menu {
+  z-index: 4;
+  margin-top: 200px;
+  width: 100%;
+  max-width: 300px;
+  color: black;
+  position: relative;
+  cursor: pointer;
+  width: 90px;
+}
+
+ul.menu li {
+  z-index: 4;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  display: table;
+}
+
+.menu .submenu {
+  z-index: 4;
+  width: 90px;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: inline-table ;
+  background-color: gainsboro;
+  border-radius: 1rem;
+  padding: 1rem;
+  transition: all .1s ease;
+}
+.menu .submenu li {
+  z-index: 4;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: black;
+  padding: 1rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.menu .submenu li:nth-child(1):hover {
+  color: grey;
+  font-size: 1.2rem;
+}
+.menu .submenu li:nth-child(2):hover {
+  color: grey;
+  font-size: 1.2rem;
+}
+.menu .submenu li:nth-child(3):hover {
+ color: grey;
+ font-size: 1.2rem;
+}
+.menu .submenu li:nth-child(4):hover {
+  color: grey;
+  font-size: 1.2rem;
+}
+.menu .submenu li:nth-child(5):hover {
+  color: grey;
+  font-size: 1.2rem;
+}
+.menu .submenu li:nth-child(6):hover {
+  color: grey;
+  font-size: 1.2rem;
+}
+.menu .submenu li:nth-child(n):hover {
+  color: grey;
+  font-size: 1.2rem;
+}
+
+.menu img {
+  width: 1.1rem;
+  transition: transform .2s ease;
+}
+
+.menu:hover img {
+  transform: rotate(180deg);
+}
+
+.menu:hover .submenu {
+  z-index: 4;
+  top: 100%;
+  opacity: 1;
+  pointer-events: all;
+}
+
+i{
+  width: 80px;
+  size: 180px;
+  font-size:2rem;
+  transition:0.01s;
+}
+i:hover{
+  
+    font-size:2.1rem;
+  
+}
+.loader:active{
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation:;
+}
+.loader{
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: 10s linear infinite;
+}
+@keyframes spin{
+  0%{ transform: rotate(0deg);}
+  100%{ transform: rotate3d(360deg);}
+}
