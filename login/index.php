@@ -163,14 +163,14 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
 
-    await fetch("track-login.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        uid: user.uid,
-        email: user.email,
-        name: user.displayName || "Manual User"
-      })
+    await fetch("http://localhost/Roshans/track-login.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      uid: user.uid,
+      email: user.email,
+      name: user.displayName || "Manual User"
+    })
     });
 
     alert("🎉 Welcome back");
@@ -198,14 +198,25 @@ document.getElementById("googleSignUpBtn").addEventListener("click", async () =>
         first_name,
         last_name
       })
-    });
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("🔥 Response from PHP:", data);
+        alert("✅ Saved to DB: " + JSON.stringify(data));
+      })
+      .catch(err => {
+        console.error("❌ Fetch error:", err);
+        alert("❌ Fetch failed");
+      });
 
-    alert("🎉 Welcome " + user.displayName);
+    alert("✅ Google login success!");
     window.location.href = "http://localhost/Roshans/index.html";
   } catch (err) {
-    alert("❌ Google Sign-In failed: " + err.message);
+    console.error("❌ Google Sign-In Failed:", err);
+    alert("Google login failed: " + err.message);
   }
 });
+
 </script>
 
 <script>
