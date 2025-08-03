@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+<<<<<<< HEAD
   // 🔥 Firebase logout + send to backend logout.php
   function handleLogout() {
     const user = firebase.auth().currentUser;
@@ -47,3 +48,5 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("❌ Logout error:", error);
     });
   }
+=======
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d

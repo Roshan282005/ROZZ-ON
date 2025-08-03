@@ -6,17 +6,24 @@
 }
 body{
         
+<<<<<<< HEAD
         background-color: linear-gradient(45deg, rgba(87, 87, 87, 0.2), rgba(87, 87, 87, 0.2)); /* lighter dark gray */
         background: hsl(0, 1%, 22%);
          background-image:  url('https://sdmntprsouthcentralus.oaiusercontent.com/files/70e02a173f75df3_00000000-8ae8-61f7-a9b0-63f7bc640a53/drvs/thumbnail/raw?se=2025-08-03T15%3A13%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=9bab6f57-c71c-5c89-b8ae-17899398adb6&skoid=ec8eb293-a61a-47e0-abd0-6051cc94b050&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-03T07%3A51%3A48Z&ske=2025-08-04T07%3A51%3A48Z&sks=b&skv=2024-08-04&sig=Pe1lFfrRW0zeZJB39c26eu2O%2BjsXsUk5GPz/GBvraKY%3D');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;        
+=======
+        background-color: rgba(87, 87, 87, 0.2); /* lighter dark gray */
+        background: #535353;
+
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
 }
 
 .container{
     background:none;
     background-color:transparent !important;
+<<<<<<< HEAD
     background-image:  url('https://sdmntprsouthcentralus.oaiusercontent.com/files/70e02a173f75df3_00000000-8ae8-61f7-a9b0-63f7bc640a53/drvs/thumbnail/raw?se=2025-08-03T15%3A13%3A24Z&sp=r&sv=2024-08-04&sr=b&scid=9bab6f57-c71c-5c89-b8ae-17899398adb6&skoid=ec8eb293-a61a-47e0-abd0-6051cc94b050&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2025-08-03T07%3A51%3A48Z&ske=2025-08-04T07%3A51%3A48Z&sks=b&skv=2024-08-04&sig=Pe1lFfrRW0zeZJB39c26eu2O%2BjsXsUk5GPz/GBvraKY%3D');
     background-size: cover;
     background-position: center;
@@ -27,6 +34,13 @@ body{
     margin:100px auto;
     border-radius:15px;
     opacity: 820%;
+=======
+    width:450px;
+    padding:1.5rem;
+    margin:100px auto;
+    border-radius:10px;
+    opacity: 420%;
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
     box-shadow:0 10px 25px 15px rgba(58, 133, 246, 0.9);
 }
 form{

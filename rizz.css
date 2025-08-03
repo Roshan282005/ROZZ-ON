@@ -353,7 +353,11 @@ i:hover{
   border-radius: 50%;
   width: 30px;
   height: 30px;
+<<<<<<< HEAD
   animation: spin 2s linear infinite;
+=======
+  animation:;
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
 }
 .loader{
   border: 5px solid #f3f3f3;

@@ -16,4 +16,8 @@ if ($stmt->execute()) {
 } else {
   echo json_encode(["success" => false, "error" => $stmt->error]);
 }
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
