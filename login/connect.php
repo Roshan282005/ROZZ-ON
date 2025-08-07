@@ -20,4 +20,9 @@ if ($conn->connect_error) {
 
 // Optional: Access Firebase API key
 $firebaseKey = $_ENV['FIREBASE_API_KEY'];
+<<<<<<< HEAD
 ?>
+=======
+?>
+
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d

@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 header("Content-Type: application/json");
 require_once 'connect.php';
 
@@ -30,3 +31,8 @@ if ($stmt->affected_rows > 0) {
 
 $conn->close();
 ?>
+=======
+session_destroy();
+header("location: index.php");
+?>
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d

@@ -74,12 +74,22 @@ require_once 'connect.php'; // Includes .env and DB connection
     import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     const firebaseConfig = {
+<<<<<<< HEAD
       apiKey: "<?php echo $_ENV['FIREBASE_API_KEY']; ?>",
       authDomain: "your-project-id.firebaseapp.com",
       projectId: "your-project-id",
       storageBucket: "your-project-id.appspot.com",
       messagingSenderId: "your-sender-id",
       appId: "your-app-id"
+=======
+    apiKey: "<?php echo $firebaseKey; ?>",
+    authDomain: "rizzauthapp.firebaseapp.com",
+    projectId: "rizzauthapp",
+    storageBucket: "rizzauthapp.appspot.com",
+    messagingSenderId: "607508317395",
+    appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
+    measurementId: "G-2YQFBWK95F"
+>>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
     };
 
     const app = initializeApp(firebaseConfig);
