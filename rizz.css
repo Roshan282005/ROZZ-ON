@@ -23,7 +23,7 @@ h1{
 
 
   background-color: #e4e9f9;
-  background:linear-gradient(to right,#cdd5f0 ,azure, #e9cccc);
+  background:linear-gradient(315deg, rgba(87, 87, 87, 0.2) 0%, rgba(87, 87, 87, 0.2) 100%);
   border-radius: 20px;
     color: black;
     padding: 0;

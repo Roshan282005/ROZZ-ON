@@ -8,18 +8,22 @@ body{
         
         background-color: rgba(87, 87, 87, 0.2); /* lighter dark gray */
         background: #535353;
-
+        background-image: linear-gradient(315deg, rgba(87, 87, 87, 0.2) 0%, rgba(87, 87, 87, 0.2) 100%),url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80');
+        background-repeat: no-repeat;
 }
 
 .container{
     background:none;
     background-color:transparent !important;
+    background-image: linear-gradient(315deg, rgba(87, 87, 87, 0.2) 0%, rgba(87, 87, 87, 0.2) 100%),url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80');
+    background-repeat: no-repeat;
     width:450px;
     padding:1.5rem;
     margin:100px auto;
     border-radius:10px;
-    opacity: 420%;
+    opacity: 820%;
     box-shadow:0 10px 25px 15px rgba(58, 133, 246, 0.9);
+    backdrop-filter: blur(10px);
 }
 form{
     margin:0 2rem;
