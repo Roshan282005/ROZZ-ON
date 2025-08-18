@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 header("Content-Type: application/json");
 require_once 'connect.php';
 
@@ -24,15 +23,15 @@ $stmt->bind_param("ss", $uid, $email);
 $stmt->execute();
 
 if ($stmt->affected_rows > 0) {
-    echo json_encode(["status" => "success", "message" => "✅ Logout recorded"]);
+    echo json_encode(["status" => "success", "message" => "Logout recorded"]);
 } else {
-    echo json_encode(["status" => "error", "message" => "⚠️ Logout not recorded"]);
+    echo json_encode(["status" => "error", "message" => " Logout not recorded"]);
 }
 
 $conn->close();
-?>
-=======
+session_start();
+// 🗑️ Destroy the session
 session_destroy();
 header("location: index.php");
 ?>
->>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
+

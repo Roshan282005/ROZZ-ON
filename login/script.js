@@ -19,8 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-<<<<<<< HEAD
-  // 🔥 Firebase logout + send to backend logout.php
+  // Firebase logout + send to backend logout.php
   function handleLogout() {
     const user = firebase.auth().currentUser;
     if (!user) return;
@@ -41,12 +40,11 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(res => res.json())
       .then(data => {
         console.log(data.message);
-        // 👉 Redirect to login page or show logout screen
+        // Redirect to login page or show logout screen
         window.location.href = "index.php"; // or any page you want
       });
     }).catch((error) => {
-      console.error("❌ Logout error:", error);
+      console.error("Logout error:", error);
     });
   }
-=======
->>>>>>> 0089aaa8b13156239de150a93f805cc10253258d
+

@@ -33,7 +33,7 @@ $firebaseKey = $_ENV['FIREBASE_API_KEY'];
     <div class="input-group" style="position: relative;">
       <i class="fas fa-lock"></i>
       <input type="password" name="password" id="loginPassword" placeholder="Password" required>
-      <i class="fas fa-eye" id="togglePassword" style="position: absolute; right: 20px; top: 30%; transform: translateY(-50%); cursor: pointer; opacity: 0.5;"></i>
+      <i class="fas fa-eye" id="togglePassword" style="position: absolute; left: 95%; top: 40%; transform: translateY(-50%); cursor: pointer; opacity: 0.5;"></i>
       <label for="loginPassword">Password</label>
     </div>
     <p class="recover">
@@ -74,7 +74,7 @@ $firebaseKey = $_ENV['FIREBASE_API_KEY'];
     <div class="input-group" style="position: relative;">
       <i class="fas fa-lock"></i>
       <input type="password" name="password" id="registerPassword" placeholder="Password" required>
-      <i class="fas fa-eye" id="toggleRegisterPassword" style="position: absolute; right: 20px; top: 30%; transform: translateY(-50%); cursor: pointer; opacity: 0.5;"></i>
+      <i class="fas fa-eye" id="toggleRegisterPassword" style="position: absolute; left: 95%; top: 40%; transform: translateY(-50%); cursor: pointer; opacity: 0.5;"></i>
       <label for="registerPassword">Password</label>
     </div>
 
@@ -146,10 +146,10 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
       })
     });
 
-    alert("✅ Signup successful");
-    window.location.href = "http://localhost/Roshans/index.html";
+    alert("Signup successful");
+    window.location.href = "http://localhost/Rizz/index.html";
   } catch (err) {
-    alert("❌ Signup error: " + err.message);
+    alert("Signup error: " + err.message);
   }
 });
 
@@ -163,7 +163,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
 
-    await fetch("http://localhost/Roshans/track-login.php", {
+    await fetch("http://localhost/Rizz/track-login.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -173,10 +173,10 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     })
     });
 
-    alert("🎉 Welcome back");
-    window.location.href = "http://localhost/Roshans/index.html";
+    alert("Welcome back");
+    window.location.href = "http://localhost/Rizz/index.html";
   } catch (err) {
-    alert("❌ Login failed: " + err.message);
+    alert("Login failed: " + err.message);
   }
 });
 
@@ -201,18 +201,18 @@ document.getElementById("googleSignUpBtn").addEventListener("click", async () =>
     })
       .then(res => res.json())
       .then(data => {
-        console.log("🔥 Response from PHP:", data);
-        alert("✅ Saved to DB: " + JSON.stringify(data));
+        console.log("Response from PHP:", data);
+        alert("Saved to DB: "+user.displayName + " (" + user.email + ")");
       })
       .catch(err => {
-        console.error("❌ Fetch error:", err);
-        alert("❌ Fetch failed");
+        console.error("Fetch error:", err);
+        alert("Fetch failed");
       });
 
-    alert("✅ Google login success!");
-    window.location.href = "http://localhost/Roshans/index.html";
+    alert("Google login success!");
+    window.location.href = "http://localhost/Rizz/index.html";
   } catch (err) {
-    console.error("❌ Google Sign-In Failed:", err);
+    console.error("Google Sign-In Failed:", err);
     alert("Google login failed: " + err.message);
   }
 });

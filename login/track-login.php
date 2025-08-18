@@ -34,16 +34,16 @@ if ($data) {
 
     // Execute query
     if (mysqli_query($conn, $sql)) {
-        echo json_encode(["status" => "✅ Login tracked successfully"]);
+        echo json_encode(["status" => "Login tracked successfully"]);
     } else {
         file_put_contents("error_log.txt", mysqli_error($conn) . PHP_EOL, FILE_APPEND);
         http_response_code(500);
-        echo json_encode(["error" => "❌ DB error", "details" => mysqli_error($conn)]);
+        echo json_encode(["error" => " DB error", "details" => mysqli_error($conn)]);
     }
 
 } else {
-    file_put_contents("error_log.txt", "❌ Invalid JSON: " . file_get_contents("php://input") . PHP_EOL, FILE_APPEND);
+    file_put_contents("error_log.txt", "Invalid JSON: " . file_get_contents("php://input") . PHP_EOL, FILE_APPEND);
     http_response_code(400);
-    echo json_encode(["error" => "❌ Invalid input"]);
+    echo json_encode(["error" => " Invalid input"]);
 }
 ?>
