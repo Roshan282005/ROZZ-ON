@@ -1,18 +1,22 @@
-# Use official PHP + Apache image
-FROM php:8.2-apache
+FROM php:8.2-fpm
 
-# Enable Apache mod_rewrite for PHP apps
-RUN a2enmod rewrite
+# Install nginx
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
+# Workdir
 WORKDIR /var/www/html
+COPY . /var/www/html
 
-# Copy app files to container
-COPY . /var/www/html/
+# Permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html
 
-# Expose Railway's dynamic $PORT
-# Railway sets the env var $PORT automatically
+# Configure nginx
+RUN rm /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port (fixed to 8080)
 EXPOSE 8080
 
-# Ensure Apache runs on $PORT instead of default 80
-CMD ["sh", "-c", "apache2-foreground -DFOREGROUND -k start -e info -E /dev/stderr -d /etc/apache2 -f /etc/apache2/apache2.conf -c 'Listen ${PORT:-8080}'"]
+# Start both services
+CMD service php8.2-fpm start && nginx -g "daemon off;"
