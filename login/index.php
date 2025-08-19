@@ -1,7 +1,64 @@
+
 <?php
-require_once 'connect.php';
-$firebaseKey = $_ENV['FIREBASE_API_KEY'];
+session_start();
+
+// ✅ Error reporting (only in dev mode, disable in prod)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// ✅ Load DB connection
+require_once __DIR__ . '/connect.php';
+
+// ✅ Load Firebase Admin SDK if needed
+// Make sure you installed firebase/php-jwt and kreait/firebase-php via composer
+require_once __DIR__ . '/vendor/autoload.php';
+
+$firebaseKey = getenv("FIREBASE_API_KEY");
+
+// Check DB connection
+if (!$conn) {
+    die("Database connection failed: " . mysqli_connect_error());
+}
+
+// ✅ Handle login via form POST
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+
+    if (!empty($email) && !empty($password)) {
+        // ✅ Prevent SQL injection
+        $stmt = $conn->prepare("SELECT * FROM firebase_users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($row = $result->fetch_assoc()) {
+            // Verify password (hashed)
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['user_id'] = $row['id'];
+                $_SESSION['email'] = $row['email'];
+                $_SESSION['login_time'] = date("Y-m-d H:i:s");
+
+                // ✅ Update login count
+                $update = $conn->prepare("UPDATE firebase_users SET login_count = login_count + 1, last_login = NOW() WHERE id = ?");
+                $update->bind_param("i", $row['id']);
+                $update->execute();
+
+                header("Location: dashboard.php");
+                exit();
+            } else {
+                $error = "Invalid password!";
+            }
+        } else {
+            $error = "User not found!";
+        }
+        $stmt->close();
+    } else {
+        $error = "Email and password are required!";
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -140,7 +197,6 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
       body: JSON.stringify({
         uid: user.uid,
         email,
-        password,
         first_name: fName,
         last_name: lName
       })
@@ -163,7 +219,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     const result = await signInWithEmailAndPassword(auth, email, password);
     const user = result.user;
 
-    await fetch("http://localhost/Rizz/track-login.php", {
+    await fetch("track-login.php", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
