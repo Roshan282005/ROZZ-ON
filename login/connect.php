@@ -8,9 +8,9 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
 // 🔍 Test env variables (for debugging only, remove in production)
-echo $_ENV['DB_HOST'];          // should print: localhost
-echo $_ENV['FIREBASE_API_KEY']; // should print your Firebase key
-echo $_ENV['ROZZ_ON'];          // should print: I9JU23NF394R6HH
+//echo $_ENV['DB_HOST'];          // should print: localhost
+//echo $_ENV['FIREBASE_API_KEY']; // should print your Firebase key
+//echo $_ENV['ROZZ_ON'];          // should print: I9JU23NF394R6HH
 
 // Database config
 $host = $_ENV['DB_HOST'];
