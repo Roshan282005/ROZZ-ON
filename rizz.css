@@ -11,7 +11,7 @@ h1:hover {
   color: gray;
 }
 nav {
-  width:  125%;
+  width:  100%;
   box-shadow: 0 20px 35px rgba(0,0,1,0.4);
   background-color: #e4e9f9;
   background: linear-gradient(315deg, rgba(87, 87, 87, 0.2) 0%, rgba(87, 87, 87, 0.2) 100%);
@@ -57,8 +57,11 @@ input {
 }
 .searchbar {
   padding: 30px;
-  margin-left: 300px;
+  z-index: 2;
+  top: 30px;
+  display: inline-flex;
   align-items: center;
+  width: 30%;
 }
 .img {
   width: 80px;
@@ -150,8 +153,8 @@ details {
 .ham-menu {
   height: 40px;
   width: 40px;
-  margin-left: 97%;
   position: fixed;
+  left: 96%;
 }
 .ham-menu span {
   cursor: pointer;
