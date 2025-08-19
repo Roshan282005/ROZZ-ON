@@ -12,7 +12,7 @@ COPY . /var/www/html/
 
 # Expose Railway's dynamic $PORT
 # Railway sets the env var $PORT automatically
-EXPOSE 9000
+EXPOSE 8080
 
 # Ensure Apache runs on $PORT instead of default 80
-CMD ["sh", "-c", "apache2-foreground -DFOREGROUND -k start -e info -E /dev/stderr -d /etc/apache2 -f /etc/apache2/apache2.conf -c 'Listen ${PORT:-9000}'"]
+CMD ["sh", "-c", "apache2-foreground -DFOREGROUND -k start -e info -E /dev/stderr -d /etc/apache2 -f /etc/apache2/apache2.conf -c 'Listen ${PORT:-8080}'"]
