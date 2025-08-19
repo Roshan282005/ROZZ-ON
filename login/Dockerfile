@@ -1,32 +1,18 @@
-FROM php:8.2-fpm
+# Stage 1: Build the React app
+FROM node:18 as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Install Nginx and required PHP extensions
-RUN apt-get update && apt-get install -y \
-    nginx \
-    libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libxml2-dev zip unzip git \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd \
-    && rm -rf /var/lib/apt/lists/*
+# Stage 2: Serve with nginx
+FROM nginx:alpine
+# Copy built files to nginx html directory
+COPY --from=build /app/build /usr/share/nginx/html
 
-# Create required directories
-RUN mkdir -p /run/php
-
-# Set working directory
-WORKDIR /var/www/html
-
-# Copy application code
-COPY . /var/www/html
-
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Remove default Nginx config and add our own
-RUN rm /etc/nginx/sites-enabled/default
+# Copy custom nginx config (optional, see next step)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Environment for Railway
-ENV PORT=8080
 EXPOSE 8080
-
-# Start PHP-FPM and Nginx
-CMD php-fpm -D && nginx -g "daemon off;"
+CMD ["nginx", "-g", "daemon off;"]
