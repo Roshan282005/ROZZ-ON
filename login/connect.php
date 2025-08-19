@@ -1,31 +1,44 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
+// connect.php
 
-use Dotenv\Dotenv;
+// Load environment variables (if available)
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+    require __DIR__ . '/vendor/autoload.php';
+    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+    $dotenv->safeLoad();
+}
 
-// Load .env file once
-$dotenv = Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+// ===================
+// MySQL Credentials
+// ===================
+$host = $_ENV['DB_HOST'] ?? 'localhost';
+$user = $_ENV['DB_USER'] ?? 'root';
+$pass = $_ENV['DB_PASS'] ?? '';
+$db   = $_ENV['DB_NAME'] ?? 'login';
 
-// 🔍 Test env variables (for debugging only, remove in production)
-//echo $_ENV['DB_HOST'];          // should print: localhost
-//echo $_ENV['FIREBASE_API_KEY']; // should print your Firebase key
-//echo $_ENV['ROZZ_ON'];          // should print: I9JU23NF394R6HH
-
-// Database config
-$host = $_ENV['DB_HOST'];
-$user = $_ENV['DB_USER'];
-$pass = $_ENV['DB_PASS'];
-$db   = $_ENV['DB_NAME'];
-
-// Create DB connection
+// Create MySQL connection (using MySQLi)
 $conn = new mysqli($host, $user, $pass, $db);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
-// Optional: Firebase API key (to use later in your project)
-$firebaseKey = $_ENV['FIREBASE_API_KEY'];
+// Set charset
+$conn->set_charset("utf8mb4");
+
+// ===================
+// Firebase Credentials
+// ===================
+$FIREBASE_API_KEY            = $_ENV['FIREBASE_API_KEY'] ?? '';
+$FIREBASE_AUTH_DOMAIN        = $_ENV['FIREBASE_AUTH_DOMAIN'] ?? '';
+$FIREBASE_PROJECT_ID         = $_ENV['FIREBASE_PROJECT_ID'] ?? '';
+$FIREBASE_STORAGE_BUCKET     = $_ENV['FIREBASE_STORAGE_BUCKET'] ?? '';
+$FIREBASE_MESSAGING_SENDER_ID = $_ENV['FIREBASE_MESSAGING_SENDER_ID'] ?? '';
+$FIREBASE_APP_ID             = $_ENV['FIREBASE_APP_ID'] ?? '';
+$FIREBASE_MEASUREMENT_ID     = $_ENV['FIREBASE_MEASUREMENT_ID'] ?? '';
+$ROZZ_ON                     = $_ENV['ROZZ_ON'] ?? ''; // Custom key if needed
+
+// Optional debugging (remove in production)
+// echo "Connected to DB and Firebase config loaded!";
 ?>
