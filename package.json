@@ -2,12 +2,11 @@
   "name": "rizz",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/login",
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-scripts": "latest",
-    "homepage": "/login"
-
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
