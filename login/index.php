@@ -72,11 +72,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
 </head>
 <body>
+  <script src="src/index.php"></script>
 <p id="status"></p>
 
 <div class="container" id="signInForm">
   <center>
-    <a href="index.html">
+    <a href="Public/index.html">
       <img src="Rozz.png" alt="logo" width="80px">
     </a>
   </center>
@@ -203,7 +204,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     });
 
     alert("Signup successful");
-    window.location.href = "http://localhost/Rizz/index.html";
+    window.location.href = "index.html";
   } catch (err) {
     alert("Signup error: " + err.message);
   }
@@ -230,7 +231,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     });
 
     alert("Welcome back");
-    window.location.href = "http://localhost/Rizz/index.html";
+    window.location.href = "index.html";
   } catch (err) {
     alert("Login failed: " + err.message);
   }
@@ -266,7 +267,7 @@ document.getElementById("googleSignUpBtn").addEventListener("click", async () =>
       });
 
     alert("Google login success!");
-    window.location.href = "http://localhost/Rizz/index.html";
+    window.location.href = "index.html";
   } catch (err) {
     console.error("Google Sign-In Failed:", err);
     alert("Google login failed: " + err.message);
