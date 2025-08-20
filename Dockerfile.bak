@@ -13,25 +13,25 @@ RUN npm run build
 # ---- Run stage (nginx) ----
 FROM nginx:stable-alpine
 
-# Install bash, tini (pid 1), gettext for envsubst, and wget for healthchecks
-RUN apk add --no-cache bash tini gettext wget
-
-# Default port for local runs (platforms like Railway/Render/Heroku will set $PORT)
+# Port hint for local runs; Railway will set $PORT
 ENV PORT=9000
 
-# Nginx template and entrypoint
-COPY .docker/nginx/default.conf /etc/nginx/templates/default.conf.template
+# Add tini for proper signal handling (optional but nice)
+RUN apk add --no-cache bash tini
+
+# Copy a template that uses $PORT and an entrypoint that substitutes it
+COPY .docker/nginx/default.conf.template /etc/nginx/templates/default.conf.template
 COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Serve the CRA build
+# Clean default site & copy build
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/build /usr/share/nginx/html
 
 # Healthcheck (nginx returns 200 on /)
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD wget -qO- http://127.0.0.1:${PORT}/ || exit 1
 
-# Expose the same port as in the nginx template
+# Expose a *typical* port (Railway will still route to $PORT after envsub)
 EXPOSE 9000
 
 ENTRYPOINT ["/sbin/tini","--","/usr/local/bin/entrypoint.sh"]
