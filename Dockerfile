@@ -1,38 +1,25 @@
-# ---- Build stage ----
-FROM node:20-alpine AS build
+# Step 1: Build the app
+FROM node:18-alpine AS builder
+
 WORKDIR /app
-
-# Faster, reproducible installs
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
-# Build React
 COPY . .
 RUN npm run build
 
-# ---- Run stage (nginx) ----
-FROM nginx:stable-alpine
+# Step 2: Serve with Vite preview
+FROM node:18-alpine
 
-# Install bash, tini (pid 1), gettext for envsubst, and wget for healthchecks
-RUN apk add --no-cache bash tini gettext wget
+WORKDIR /app
+COPY --from=builder /app ./
 
-# Default port for local runs (platforms like Railway/Render/Heroku will set $PORT)
-ENV PORT=9000
+# Railway sets PORT automatically
+ENV PORT=8080
 
-# Nginx template and entrypoint
-COPY .docker/nginx/default.conf /etc/nginx/templates/default.conf.template
-COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
+# Install Vite globally (for preview command)
+RUN npm install -g vite
 
-# Serve the CRA build
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 8080
 
-# Healthcheck (nginx returns 200 on /)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD wget -qO- http://127.0.0.1:${PORT}/ || exit 1
-
-# Expose the same port as in the nginx template
-EXPOSE 9000
-
-ENTRYPOINT ["/sbin/tini","--","/usr/local/bin/entrypoint.sh"]
-CMD ["nginx","-g","daemon off;"]
+CMD ["vite", "preview", "--host", "0.0.0.0", "--port", "8080"]

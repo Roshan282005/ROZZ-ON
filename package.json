@@ -1,16 +1,21 @@
 {
   "name": "rizz",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
-  "homepage": "/login",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
-  "scripts": {
-    "start": "live-server .",
-    "build": "echo 'No build step needed'"
+  "devDependencies": {
+    "vite": "^5.2.0",
+    "@vitejs/plugin-react": "^4.2.0"
   },
+  "scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview --host 0.0.0.0 --port 8080",
+  "start": "vite preview --host 0.0.0.0 --port $PORT"
+},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -22,8 +27,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "live-server": "^1.2.2"
   }
 }
