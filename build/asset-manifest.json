@@ -2,6 +2,12 @@
   "files": {
     "main.js": "/static/js/main.cc8a1eb2.js",
     "index.html": "/index.html",
+    "index.php": "/login/index.php",
+    ".env" : "/login/.env",
+    "connect.php" : "/login/connect.php",
+    "save-user.php" : "/login/save-user.php",
+    "track-login.php" : "/login/track-login.php",
+    "register.php" : "/login/register.php",
     "main.cc8a1eb2.js.map": "/static/js/main.cc8a1eb2.js.map"
   },
   "entrypoints": [
