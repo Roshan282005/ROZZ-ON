@@ -1,12 +1,23 @@
 services:
   - type: web
-    name: roshans-php-backend
+    name: roshans-frontend
     env: docker
     plan: free
     dockerfilePath: ./Dockerfile
     envVars:
+      - key: PORT
+        value: 8080
+
+  - type: web
+    name: roshans-php-backend
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.bak
+    envVars:
+      - key: PORT
+        value: 8080
       - key: DB_HOST
-        value: roshans-mysql:3306
+        value: roshans-mysql
       - key: DB_USER
         value: roshan_user
       - key: DB_PASS

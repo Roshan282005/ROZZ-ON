@@ -1,38 +1,20 @@
-# ---- Build stage ----
-FROM node:20-alpine AS build
+# Use Node.js for React build
+FROM node:18
+
 WORKDIR /app
 
-# Faster, reproducible installs
+# Copy package.json and install
 COPY package*.json ./
-RUN npm ci
+RUN npm install
+
+# Copy all files
+COPY . .
 
 # Build React
-COPY . .
 RUN npm run build
 
-# ---- Run stage (nginx) ----
-FROM nginx:stable-alpine
+# Serve with a simple static server
+RUN npm install -g serve
+EXPOSE 8080
 
-# Port hint for local runs; Railway will set $PORT
-ENV PORT=9000
-
-# Add tini for proper signal handling (optional but nice)
-RUN apk add --no-cache bash tini
-
-# Copy a template that uses $PORT and an entrypoint that substitutes it
-COPY .docker/nginx/default.conf.template /etc/nginx/templates/default.conf.template
-COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Clean default site & copy build
-RUN rm -rf /usr/share/nginx/html/*
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Healthcheck (nginx returns 200 on /)
-HEALTHCHECK --interval=30s --timeout=5s --start-period=20s CMD wget -qO- http://127.0.0.1:${PORT}/ || exit 1
-
-# Expose a *typical* port (Railway will still route to $PORT after envsub)
-EXPOSE 9000
-
-ENTRYPOINT ["/sbin/tini","--","/usr/local/bin/entrypoint.sh"]
-CMD ["nginx","-g","daemon off;"]
+CMD ["serve", "-s", "build", "-l", "8080"]

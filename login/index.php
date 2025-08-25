@@ -158,6 +158,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   </div>
 
   <script type="module">
+
+    const API_URL = "https://roshans-php-backend.onrender.com";
+
     import {
       initializeApp
     } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";

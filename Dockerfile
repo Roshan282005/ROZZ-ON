@@ -1,25 +1,20 @@
-# Step 1: Build the app
-FROM node:18-alpine AS builder
+# Use Node.js for React build
+FROM node:18
 
 WORKDIR /app
+
+# Copy package.json and install
 COPY package*.json ./
 RUN npm install
 
+# Copy all files
 COPY . .
+
+# Build React
 RUN npm run build
 
-# Step 2: Serve with Vite preview
-FROM node:18-alpine
-
-WORKDIR /app
-COPY --from=builder /app ./
-
-# Railway sets PORT automatically
-ENV PORT=8080
-
-# Install Vite globally (for preview command)
-RUN npm install -g vite
-
+# Serve with a simple static server
+RUN npm install -g serve
 EXPOSE 8080
 
-CMD ["vite", "preview", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["serve", "-s", "build", "-l", "8080"]
