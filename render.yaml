@@ -17,13 +17,11 @@ services:
       - key: PORT
         value: 8080
       - key: DB_HOST
-        value: roshans-mysql
+        value: localhost
       - key: DB_USER
-        value: roshan_user
-      - key: DB_PASS
-        value: roshan_sneha
+        value: root
       - key: DB_NAME
-        value: roshan_db
+        value: login
       - key: FIREBASE_API_KEY
         value: AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc
       - key: FIREBASE_AUTH_DOMAIN
@@ -40,8 +38,7 @@ services:
         value: G-2YQFBWK95F  
 
 databases:
-  - name: roshans-mysql
+  - name: localhost
     plan: free
-    databaseName: roshan_db
-    user: roshan_user
-    
+    databaseName: login
+    user: root
