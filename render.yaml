@@ -44,4 +44,4 @@ databases:
     plan: free
     databaseName: roshan_db
     user: roshan_user
-    password: roshan_sneha
+    
