@@ -7,15 +7,15 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "vite": "^5.2.0",
-    "@vitejs/plugin-react": "^4.2.0"
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^5.4.19"
   },
   "scripts": {
-  "dev": "vite",
-  "build": "vite build",
-  "preview": "vite preview --host 0.0.0.0 --port 8080",
-  "start": "vite preview --host 0.0.0.0 --port $PORT"
-},
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "vite preview --host 0.0.0.0 --port $PORT"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
