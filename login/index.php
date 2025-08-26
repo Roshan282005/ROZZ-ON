@@ -96,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <label for="loginPassword">Password</label>
       </div>
       <p class="recover">
-        <a href="register.php">Forgot Password</a>
+        <a href="reset-password.php">Forgot Password</a>
       </p>
       <input type="submit" class="btn" value="Sign In" name="signIn">
     </form>

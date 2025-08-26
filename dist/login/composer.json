@@ -1,8 +1,0 @@
-{
-  "name": "rozzon/firebase-php",
-  "require": {
-    "vlucas/phpdotenv": "^5.5"
-  }
-  
-}
-

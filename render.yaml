@@ -27,7 +27,7 @@ services:
       - key: DB_NAME
         value: login
       - key: FIREBASE_API_KEY
-        value: AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc
+        fromSecret: FIREBASE_API_KEY
       - key: FIREBASE_AUTH_DOMAIN
         value: rizzauthapp.firebaseapp.com
       - key: FIREBASE_PROJECT_ID

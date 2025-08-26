@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - "3000:8080"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+
+  backend:
+    build: ./login
+    ports:
+      - "8000:80"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./login:/var/www/html
