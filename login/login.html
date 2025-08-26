@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ℝ𝕀ℤℤ</title>
+    <link rel="icon" href="../Rozz.png">
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../rizz.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #27ae60;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>ℝ𝕀ℤℤ</h1>
+            <p>Welcome back! Please sign in to your account</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="passwordError"></div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="reset-password.php">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-login">Sign In</button>
+        </form>
+
+        <div class="register-link">
+            Don't have an account? <a href="../register.html">Sign up</a>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            Login successful! Redirecting to dashboard...
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Reset error messages
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(el => {
+                el.style.display = 'none';
+                el.textContent = '';
+            });
+
+            // Get form values
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Validation
+            let isValid = true;
+
+            if (!email) {
+                document.getElementById('emailError').textContent = 'Email is required';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!password) {
+                document.getElementById('passwordError').textContent = 'Password is required';
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            try {
+                // Send login data to server
+                const response = await fetch('login.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    // Show success message
+                    document.getElementById('successMessage').style.display = 'block';
+                    
+                    // Redirect to dashboard after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.php';
+                    }, 2000);
+                } else {
+                    // Show error message
+                    document.getElementById('emailError').textContent = data.message || 'Login failed';
+                    document.getElementById('emailError').style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('emailError').textContent = 'An error occurred. Please try again.';
+                document.getElementById('emailError').style.display = 'block';
+            }
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>

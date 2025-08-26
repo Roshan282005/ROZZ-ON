@@ -1,24 +1,31 @@
-# TODO List for RIZZ Website Enhancements
+# Dynamic Website Development Plan
 
-## Phase 1: Menu Functionality Enhancement - COMPLETED
-- [x] Add click-outside-to-close functionality to hamburger menu in src/app.js
-- [x] Add keyboard accessibility (ESC key to close menu)
-- [x] Add menu item click handling to close menu
+## Phase 1: Database Setup
+1. [x] Create database schema SQL file (`login/database-schema.sql`)
+2. [ ] Execute SQL script to create database and tables
+3. [ ] Verify database connection works properly
 
-## Phase 2: Firebase Authentication Enhancement - COMPLETED
-- [x] Add proper error handling for Firebase authentication in src/index.js
-- [x] Add user feedback for login success/failure
-- [x] Add loading states for authentication processes
-- [x] Add comprehensive error messages for different Firebase error codes
-- [x] Enhance logout functionality with better error handling
+## Phase 2: Frontend Development
+4. [x] Create user registration form HTML/CSS
+5. [x] Create user login form HTML/CSS
+6. [x] Implement JavaScript for form handling and AJAX requests
+7. [x] Create user dashboard/profile page
 
-## Phase 3: Testing
-- [ ] Test menu functionality across different browsers
-- [ ] Test authentication flow with various scenarios
-- [ ] Test responsive design and mobile functionality
+## Phase 3: Backend Enhancement
+8. [x] Update PHP files to use consistent database connection
+9. [x] Add session management for user authentication
+10. [x] Implement proper error handling and validation
+11. [ ] Add password reset functionality
 
-## Completed Tasks
-- [x] Initial analysis of current codebase
-- [x] Created enhancement plan
-- [x] Enhanced src/app.js with improved menu functionality
-- [x] Enhanced src/index.js with comprehensive authentication features
+## Phase 4: Testing & Deployment
+12. [ ] Test all user flows (registration, login, password reset)
+13. [ ] Prepare for production deployment
+14. [ ] Set up environment variables for production
+
+## Current Status:
+- Database schema created with `firebase_users`, `user_sessions`, and `password_reset_tokens` tables
+- User registration form created with modern design
+- Registration backend PHP script implemented with validation and error handling
+- Session management implemented for user authentication
+- Ready to set up database and begin frontend development
+- Firebase authentication is integrated and ready for use
