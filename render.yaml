@@ -12,14 +12,18 @@ services:
     name: roshans-php-backend
     env: docker
     plan: free
-    dockerfilePath: ./Dockerfile.bak
+    dockerfilePath: ./login/Dockerfile
     envVars:
       - key: PORT
-        value: 8080
+        value: 80
       - key: DB_HOST
-        value: localhost
+        value: mysql-db
+      - key: DB_PORT
+        value: 3306
       - key: DB_USER
         value: root
+      - key: DB_PASS
+        fromSecret: DB_PASSWORD
       - key: DB_NAME
         value: login
       - key: FIREBASE_API_KEY
@@ -35,10 +39,12 @@ services:
       - key: FIREBASE_APP_ID
         value: 1:607508317395:web:f2f403d10915d6d2ef4026
       - key: FIREBASE_MEASUREMENT_ID
-        value: G-2YQFBWK95F  
+        value: G-2YQFBWK95F
+      - key: ROZZ_ON
+        value: true
 
 databases:
-  - name: localhost
+  - name: mysql-db
     plan: free
     databaseName: login
     user: root
