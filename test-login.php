@@ -1,11 +1,9 @@
 <?php
-// Test registration functionality
-echo "<h1>Registration Test</h1>";
+// Test login functionality
+echo "<h1>Login Test</h1>";
 
-// Test data
+// Test data (using the same credentials from registration test)
 $test_data = [
-    'first_name' => 'Test',
-    'last_name' => 'User',
     'email' => 'test@example.com',
     'password' => 'password123'
 ];
@@ -17,7 +15,7 @@ $json_data = json_encode($test_data);
 $ch = curl_init();
 
 // Set cURL options
-curl_setopt($ch, CURLOPT_URL, "http://localhost/rizz/login/save-user.php");
+curl_setopt($ch, CURLOPT_URL, "http://localhost/rizz/login/login.php");
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -47,8 +45,13 @@ echo "<pre>" . print_r($test_data, true) . "</pre>";
 
 echo "<h2>Next Steps:</h2>";
 echo "<ul>";
-echo "<li><a href='http://localhost/rizz/login/login.html'>Test Login</a></li>";
 echo "<li><a href='http://localhost/rizz/login/dashboard.php'>Test Dashboard</a></li>";
-echo "<li><a href='http://localhost/rizz/login/setup-database.php'>Re-run Database Setup</a></li>";
+echo "<li><a href='http://localhost/rizz/login/logout.php'>Test Logout</a></li>";
+echo "<li><a href='http://localhost/rizz/test-registration.php'>Test Registration Again</a></li>";
 echo "</ul>";
+
+// Test dashboard access
+echo "<h2>Dashboard Test:</h2>";
+$dashboard_response = file_get_contents("http://localhost/rizz/login/dashboard.php");
+echo "<pre>" . htmlspecialchars(substr($dashboard_response, 0, 500)) . "...</pre>";
 ?>
