@@ -1,11 +1,9 @@
 <?php
-// Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
+// Load configuration
+require 'config.php';
 
 // Create connection without selecting database first
-$conn = new mysqli($servername, $username, $password);
+$conn = new mysqli($db_config['host'], $db_config['username'], $db_config['password']);
 
 // Check connection
 if ($conn->connect_error) {
@@ -24,7 +22,7 @@ if ($conn->query($sql) === TRUE) {
 $conn->select_db("login");
 
 // Read SQL schema file
-$sql_file = "database-schema.sql";
+$sql_file = __DIR__ . "/database-schema.sql";
 if (!file_exists($sql_file)) {
     die("SQL schema file not found: $sql_file");
 }

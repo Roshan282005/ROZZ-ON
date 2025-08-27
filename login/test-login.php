@@ -15,7 +15,7 @@ $json_data = json_encode($test_data);
 $ch = curl_init();
 
 // Set cURL options
-curl_setopt($ch, CURLOPT_URL, "http://localhost/rizz/login/login.php");
+curl_setopt($ch, CURLOPT_URL, "http://localhost:8000/login/login.php");
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -52,6 +52,6 @@ echo "</ul>";
 
 // Test dashboard access
 echo "<h2>Dashboard Test:</h2>";
-$dashboard_response = file_get_contents("http://localhost/rizz/login/dashboard.php");
+$dashboard_response = file_get_contents("http://localhost:8000/login/dashboard.php");
 echo "<pre>" . htmlspecialchars(substr($dashboard_response, 0, 500)) . "...</pre>";
 ?>

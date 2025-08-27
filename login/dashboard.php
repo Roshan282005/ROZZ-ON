@@ -7,11 +7,14 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Load configuration
+require 'config.php';
+
 // Database configuration
-$servername = "localhost";
-$username = "root";
-$password = "";
-$database = "login";
+$servername = $db_config['host'];
+$username = $db_config['username'];
+$password = $db_config['password'];
+$database = $db_config['database'];
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $database);
@@ -28,6 +31,22 @@ $stmt->execute();
 $stmt->bind_result($first_name, $last_name, $email, $created_at);
 $stmt->fetch();
 $stmt->close();
+
+// Get recent failed login attempts
+$attempts_stmt = $conn->prepare("
+    SELECT COUNT(*) as recent_attempts 
+    FROM login_attempts 
+    WHERE email = ? AND attempt_time > DATE_SUB(NOW(), INTERVAL 15 MINUTE)
+");
+$attempts_stmt->bind_param("s", $email);
+$attempts_stmt->execute();
+$attempts_stmt->bind_result($recent_attempts);
+$attempts_stmt->fetch();
+$attempts_stmt->close();
+
+// Check if account is currently locked
+$is_locked = $recent_attempts >= 5;
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -187,6 +206,43 @@ $conn->close();
                 <div class="info-item">
                     <h3>Member Since</h3>
                     <p><?php echo date('F j, Y', strtotime($created_at)); ?></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="user-info">
+            <h2>Security Information</h2>
+            <div class="info-grid">
+                <div class="info-item" style="border-left-color: <?php echo $is_locked ? '#e74c3c' : '#27ae60'; ?>;">
+                    <h3>Account Status</h3>
+                    <p>
+                        <?php 
+                        if ($is_locked) {
+                            echo '<span style="color: #e74c3c; font-weight: 600;">🔒 Temporarily Locked</span><br>';
+                            echo '<small style="color: #666;">Too many failed login attempts</small>';
+                        } else {
+                            echo '<span style="color: #27ae60; font-weight: 600;">✅ Active</span><br>';
+                            echo '<small style="color: #666;">Your account is secure</small>';
+                        }
+                        ?>
+                    </p>
+                </div>
+                <div class="info-item">
+                    <h3>Recent Failed Attempts</h3>
+                    <p>
+                        <?php 
+                        echo $recent_attempts . ' in last 15 minutes<br>';
+                        echo '<small style="color: #666;">' . (5 - $recent_attempts) . ' attempts remaining</small>';
+                        ?>
+                    </p>
+                </div>
+                <div class="info-item">
+                    <h3>Security Tips</h3>
+                    <p style="font-size: 0.8rem; line-height: 1.4;">
+                        • Use a strong, unique password<br>
+                        • Enable two-factor authentication<br>
+                        • Monitor login activity regularly
+                    </p>
                 </div>
             </div>
         </div>

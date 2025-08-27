@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php echo $success; ?>
       </div>
       <p class="links">
-        <a href="index.php">Return to Login</a>
+        <a href="login.php">Return to Login</a>
       </p>
     <?php else: ?>
       <form id="resetPasswordForm" method="POST">
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </form>
       
       <p class="links">
-        <a href="index.php">Back to Login</a>
+        <a href="login.php">Back to Login</a>
       </p>
     <?php endif; ?>
   </div>

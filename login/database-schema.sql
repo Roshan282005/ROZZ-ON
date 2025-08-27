@@ -46,3 +46,14 @@ CREATE TABLE IF NOT EXISTS password_reset_tokens (
     FOREIGN KEY (user_id) REFERENCES firebase_users(id) ON DELETE CASCADE,
     INDEX idx_token (token)
 );
+
+-- Create login_attempts table to track failed login attempts
+CREATE TABLE IF NOT EXISTS login_attempts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    attempt_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ip_address VARCHAR(45) NOT NULL,
+    FOREIGN KEY (email) REFERENCES firebase_users(email) ON DELETE CASCADE,
+    INDEX idx_email (email),
+    INDEX idx_attempt_time (attempt_time)
+);

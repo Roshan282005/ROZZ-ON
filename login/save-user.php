@@ -98,12 +98,10 @@ $uid = uniqid('rizz_', true);
 $hashed_password = password_hash($input['password'], PASSWORD_DEFAULT);
 
 // Insert new user
-$stmt = $conn->prepare("INSERT INTO firebase_users (uid, email, first_name, last_name, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())");
+$stmt = $conn->prepare("INSERT INTO firebase_users (uid, email, first_name, last_name, password, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
 $stmt->bind_param("sssss", $uid, $input['email'], $input['first_name'], $input['last_name'], $hashed_password);
 
 if ($stmt->execute()) {
-    $stmt->close();
-    
     // Create user session
     session_start();
     $_SESSION['user_id'] = $uid;

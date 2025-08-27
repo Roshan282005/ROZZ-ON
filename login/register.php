@@ -13,11 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $uid = uniqid("manual_");
-    $name = $fName . ' ' . $lName;
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    $stmt = $conn->prepare("INSERT INTO firebase_users (uid, name, email, password, login_count, created_at, last_login) VALUES (?, ?, ?, ?, 1, NOW(), NOW())");
-    $stmt->bind_param("ssss", $uid, $name, $email, $hashedPassword);
+    $stmt = $conn->prepare("INSERT INTO firebase_users (uid, first_name, last_name, email, password, login_count, created_at, last_login) VALUES (?, ?, ?, ?, ?, 1, NOW(), NOW())");
+    $stmt->bind_param("sssss", $uid, $fName, $lName, $email, $hashedPassword);
 
     if ($stmt->execute()) {
         echo "✅ Manual registration successful!";

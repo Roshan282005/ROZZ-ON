@@ -76,12 +76,20 @@
                 </h1>
                 <ul  style=" display: inline-table; width: 40px;" >
                 <div class="register"
-                     style="padding-left: 580px;
+                     style="padding-left: 500px;
                             padding-bottom: 8px;">
                     <a href="login/index.php" id="loadInButton" style="text-decoration: none; color: black;">
                         <i class="fas fa-sign-in-alt" style="color: black;"><br>
                         <p style="font-size: 1rem; font-family: 'Courier New', Courier, monospace;text-decoration: dotted;">Login</p></i>
                     
+                    </a>
+                </div>
+                <div class="cart-icon" style="display: inline-block; margin-left: 20px;">
+                    <a href="#" id="cartButton" style="text-decoration: none; color: black;">
+                        <i class="fas fa-shopping-cart" style="color: black;"><br>
+                        <p style="font-size: 1rem; font-family: 'Courier New', Courier, monospace;">
+                            Cart (<span id="cart-count">0</span>)
+                        </p></i>
                     </a>
                 </div>
                    
@@ -375,6 +383,92 @@
     </div>
 
 </body>
+<script>
+// Cart functionality
+let cartCount = 0;
+const cartItems = [];
 
+// Initialize cart from localStorage
+function initCart() {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+        cartItems = JSON.parse(savedCart);
+        cartCount = cartItems.length;
+        updateCartCount();
+    }
+}
+
+// Update cart count display
+function updateCartCount() {
+    const cartCountElement = document.getElementById('cart-count');
+    if (cartCountElement) {
+        cartCountElement.textContent = cartCount;
+    }
+}
+
+// Add item to cart
+function addToCart(productId, productName, productPrice) {
+    const existingItem = cartItems.find(item => item.id === productId);
+    
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cartItems.push({
+            id: productId,
+            name: productName,
+            price: productPrice,
+            quantity: 1
+        });
+    }
+    
+    cartCount++;
+    updateCartCount();
+    saveCart();
+    alert(`${productName} added to cart!`);
+}
+
+// Remove item from cart
+function removeFromCart(productId) {
+    const index = cartItems.findIndex(item => item.id === productId);
+    if (index !== -1) {
+        cartItems.splice(index, 1);
+        cartCount--;
+        updateCartCount();
+        saveCart();
+    }
+}
+
+// Save cart to localStorage
+function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+}
+
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', function() {
+    initCart();
+    
+    // Add click event to cart button
+    const cartButton = document.getElementById('cartButton');
+    if (cartButton) {
+        cartButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert(`Cart has ${cartCount} item${cartCount !== 1 ? 's' : ''}`);
+            // Here you would typically show a cart modal or redirect to cart page
+        });
+    }
+    
+    // Add "Add to Cart" buttons to products
+    const productBoxes = document.querySelectorAll('.box');
+    productBoxes.forEach((box, index) => {
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add to Cart';
+        addButton.style.cssText = 'background: black; color: white; border: none; padding: 5px 10px; cursor: pointer; margin-top: 5px;';
+        addButton.onclick = function() {
+            addToCart(`product-${index}`, `Product ${index + 1}`, 29.99);
+        };
+        box.appendChild(addButton);
+    });
+});
+</script>
 
 </html>

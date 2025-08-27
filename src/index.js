@@ -1,4 +1,15 @@
 // Initialize Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
+    authDomain: "rizzauthapp.firebaseapp.com",
+    projectId: "rizzauthapp",
+    storageBucket: "rizzauthapp.appspot.com",
+    messagingSenderId: "607508317395",
+    appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
+    measurementId: "G-2YQFBWK95F"
+};
+
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
 // Password toggle functionality
@@ -32,11 +43,12 @@ function loginFunction() {
     return;
   }
 
-  // Show loading state
+// Show loading state with spinner
   const signInButton = document.getElementById("signInButton");
-  const originalText = signInButton.textContent;
-  signInButton.textContent = "Signing in...";
+  const originalHTML = signInButton.innerHTML;
+  signInButton.innerHTML = '<span class="loader-spinner"></span> Signing in...';
   signInButton.disabled = true;
+  signInButton.classList.add('loading');
 
   firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
@@ -70,36 +82,53 @@ function loginFunction() {
       });
     })
     .catch((error) => {
-      // Handle login errors
-      let errorMessage = "Login failed. Please try again.";
+      // Handle login errors with more detailed and user-friendly messages
+      let errorMessage = "Login failed. Please check your credentials and try again.";
+      let errorDetails = "";
       
       switch (error.code) {
         case "auth/invalid-email":
           errorMessage = "Invalid email address format.";
+          errorDetails = "Please enter a valid email address (e.g., user@example.com).";
           break;
         case "auth/user-disabled":
-          errorMessage = "This account has been disabled.";
+          errorMessage = "Account disabled.";
+          errorDetails = "This account has been temporarily disabled. Please contact support.";
           break;
         case "auth/user-not-found":
-          errorMessage = "No account found with this email.";
+          errorMessage = "Account not found.";
+          errorDetails = "No account exists with this email address. Please check or sign up.";
           break;
         case "auth/wrong-password":
           errorMessage = "Incorrect password.";
+          errorDetails = "The password you entered is incorrect. Please try again or reset your password.";
           break;
         case "auth/too-many-requests":
-          errorMessage = "Too many failed attempts. Please try again later.";
+          errorMessage = "Too many attempts.";
+          errorDetails = "Too many failed login attempts. Please try again in a few minutes.";
           break;
+        case "auth/network-request-failed":
+          errorMessage = "Network error.";
+          errorDetails = "Unable to connect to the server. Please check your internet connection.";
+          break;
+        default:
+          errorDetails = "An unexpected error occurred. Please try again later.";
       }
       
-      showMessage(errorMessage, "error");
+      // Show detailed error message
+      showMessage(`${errorMessage} ${errorDetails}`, "error");
+      
+      // Log detailed error for debugging
+      console.error("Login error:", error.code, error.message);
     })
-    .finally(() => {
-      // Restore button state
-      if (signInButton) {
-        signInButton.textContent = originalText;
-        signInButton.disabled = false;
-      }
-    });
+  .finally(() => {
+    // Restore button state
+    if (signInButton) {
+      signInButton.innerHTML = originalHTML;
+      signInButton.disabled = false;
+      signInButton.classList.remove('loading');
+    }
+  });
 }
 
 // Show message to user
@@ -113,32 +142,7 @@ function showMessage(message, type = "info") {
   // Create message element
   const messageDiv = document.createElement("div");
   messageDiv.id = "loginMessage";
-  messageDiv.style.padding = "10px";
-  messageDiv.style.margin = "10px 0";
-  messageDiv.style.borderRadius = "4px";
-  messageDiv.style.textAlign = "center";
-  
-  switch (type) {
-    case "error":
-      messageDiv.style.backgroundColor = "#fee";
-      messageDiv.style.color = "#c33";
-      messageDiv.style.border = "1px solid #c33";
-      break;
-    case "success":
-      messageDiv.style.backgroundColor = "#efe";
-      messageDiv.style.color = "#363";
-      messageDiv.style.border = "1px solid #363";
-      break;
-    case "warning":
-      messageDiv.style.backgroundColor = "#ffd";
-      messageDiv.style.color = "#660";
-      messageDiv.style.border = "1px solid #660";
-      break;
-    default:
-      messageDiv.style.backgroundColor = "#eef";
-      messageDiv.style.color = "#336";
-      messageDiv.style.border = "1px solid #336";
-  }
+  messageDiv.className = type;
   
   messageDiv.textContent = message;
   
@@ -166,12 +170,13 @@ function handleLogout() {
     return;
   }
 
-  // Show loading state
+  // Show loading state with spinner
   const logoutButton = document.querySelector('.logout a');
   if (logoutButton) {
-    const originalText = logoutButton.textContent;
-    logoutButton.textContent = "Logging out...";
+    const originalHTML = logoutButton.innerHTML;
+    logoutButton.innerHTML = '<span class="loader-spinner"></span> Logging out...';
     logoutButton.style.opacity = "0.7";
+    logoutButton.classList.add('loading');
   }
 
   firebase.auth().signOut().then(() => {
@@ -207,8 +212,9 @@ function handleLogout() {
     // Restore button state
     const logoutButton = document.querySelector('.logout a');
     if (logoutButton) {
-      logoutButton.textContent = "Logout";
+      logoutButton.innerHTML = originalHTML || "Logout";
       logoutButton.style.opacity = "1";
+      logoutButton.classList.remove('loading');
     }
   });
 }
