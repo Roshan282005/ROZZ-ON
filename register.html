@@ -1,278 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - ℝ𝕀ℤℤ</title>
-    <link rel="icon" href="Rozz.png">
-    <!-- Fonts and Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="rizz.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .register-container {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .register-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .register-header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #333;
-        }
-
-        .register-header p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn-register {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
-
-        .btn-register:hover {
-            transform: translateY(-2px);
-        }
-
-        .login-link {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: #666;
-        }
-
-        .login-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .login-link a:hover {
-            text-decoration: underline;
-        }
-
-        .error-message {
-            color: #e74c3c;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        .success-message {
-            color: #27ae60;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-    </style>
+    <title>Login | ℝ𝕀ℤℤ</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-<body>
-    <div class="register-container">
-        <div class="register-header">
-            <h1>ℝ𝕀ℤℤ</h1>
-            <p>Create your account</p>
-        </div>
 
-        <form id="registerForm">
-            <div class="form-group">
-                <label for="firstName">First Name</label>
-                <input type="text" id="firstName" name="first_name" required>
-                <div class="error-message" id="firstNameError"></div>
+<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-700 to-indigo-700">
+
+    <!-- Container -->
+    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Welcome to ℝ𝕀ℤℤ Auth</h2>
+
+        <!-- LOGIN FORM -->
+        <form id="loginForm" class="space-y-4">
+            <div class="relative">
+                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="email" id="loginEmail" placeholder="Email" required
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
             </div>
 
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <input type="text" id="lastName" name="last_name" required>
-                <div class="error-message" id="lastNameError"></div>
+            <div class="relative">
+                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="password" id="loginPassword" placeholder="Password" required
+                    class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                <i class="fas fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer opacity-70"
+                    id="toggleLoginPassword"></i>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
-                <div class="error-message" id="emailError"></div>
-            </div>
+            <button type="submit"
+                class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">Login</button>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-                <div class="error-message" id="passwordError"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPassword">Confirm Password</label>
-                <input type="password" id="confirmPassword" name="confirm_password" required>
-                <div class="error-message" id="confirmPasswordError"></div>
-            </div>
-
-            <button type="submit" class="btn-register">Create Account</button>
+            <!-- Google Login -->
+            <button type="button" id="googleLoginBtn"
+                class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 flex items-center justify-center">
+                <i class="fab fa-google mr-2"></i> Sign in with Google
+            </button>
         </form>
 
-        <div class="login-link">
-            Already have an account? <a href="login/login.html">Sign in</a>
-        </div>
+        <p class="text-center text-sm text-gray-600 mt-4">Don’t have an account?
+            <a href="#" onclick="toggleForm()" class="text-indigo-600 font-semibold">Register</a>
+        </p>
 
-        <div class="success-message" id="successMessage">
-            Registration successful! Redirecting to login...
-        </div>
+        <!-- REGISTER FORM (Hidden Initially) -->
+        <form id="registerForm" class="space-y-4 hidden mt-6">
+            <div class="relative">
+                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="fName" placeholder="First Name" required
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="text" id="lName" placeholder="Last Name" required
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="email" id="registerEmail" placeholder="Email" required
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+            </div>
+
+            <div class="relative">
+                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <input type="password" id="registerPassword" placeholder="Password" required
+                    class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                <i class="fas fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer opacity-70"
+                    id="toggleRegisterPassword"></i>
+            </div>
+
+            <button type="submit"
+                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">Register</button>
+
+            <p class="text-center text-sm text-gray-600 mt-4">Already have an account?
+                <a href="#" onclick="toggleForm()" class="text-indigo-600 font-semibold">Login</a>
+            </p>
+        </form>
     </div>
 
-    <script>
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            // Reset error messages
-            const errorElements = document.querySelectorAll('.error-message');
-            errorElements.forEach(el => {
-                el.style.display = 'none';
-                el.textContent = '';
+    <!-- Firebase -->
+    <script type="module">
+        // Change API_URL to local backend for testing
+        const API_URL = "http://localhost/rizz"; // Updated to local backend URL
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
+            authDomain: "rizzauthapp.firebaseapp.com",
+            projectId: "rizzauthapp",
+            storageBucket: "rizzauthapp.appspot.com",
+            messagingSenderId: "607508317395",
+            appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
+            measurementId: "G-2YQFBWK95F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Toggle forms
+        window.toggleForm = function () {
+            document.getElementById("loginForm").classList.toggle("hidden");
+            document.getElementById("registerForm").classList.toggle("hidden");
+        };
+
+        // Toggle password visibility
+        function setupPasswordToggle(toggleId, inputId) {
+            const toggle = document.getElementById(toggleId);
+            const input = document.getElementById(inputId);
+            toggle.addEventListener("click", () => {
+                input.type = input.type === "password" ? "text" : "password";
+                toggle.classList.toggle("fa-eye-slash");
             });
+        }
+        setupPasswordToggle("toggleLoginPassword", "loginPassword");
+        setupPasswordToggle("toggleRegisterPassword", "registerPassword");
 
-            // Get form values
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            // Validation
-            let isValid = true;
-
-            if (!firstName) {
-                document.getElementById('firstNameError').textContent = 'First name is required';
-                document.getElementById('firstNameError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (!lastName) {
-                document.getElementById('lastNameError').textContent = 'Last name is required';
-                document.getElementById('lastNameError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (!email) {
-                document.getElementById('emailError').textContent = 'Email is required';
-                document.getElementById('emailError').style.display = 'block';
-                isValid = false;
-            } else if (!isValidEmail(email)) {
-                document.getElementById('emailError').textContent = 'Please enter a valid email';
-                document.getElementById('emailError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (!password) {
-                document.getElementById('passwordError').textContent = 'Password is required';
-                document.getElementById('passwordError').style.display = 'block';
-                isValid = false;
-            } else if (password.length < 6) {
-                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
-                document.getElementById('passwordError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (password !== confirmPassword) {
-                document.getElementById('confirmPasswordError').textContent = 'Passwords do not match';
-                document.getElementById('confirmPasswordError').style.display = 'block';
-                isValid = false;
-            }
-
-            if (!isValid) return;
+        // Register
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const fName = document.getElementById("fName").value;
+            const lName = document.getElementById("lName").value;
+            const email = document.getElementById("registerEmail").value;
+            const password = document.getElementById("registerPassword").value;
 
             try {
-                // Send registration data to server
-                const response = await fetch('login/save-user.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                const user = result.user;
+
+                await fetch(`${API_URL}/login/signup.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
-                        first_name: firstName,
-                        last_name: lastName,
-                        email: email,
-                        password: password
+                        uid: user.uid,
+                        email,
+                        first_name: fName,
+                        last_name: lName
                     })
                 });
 
-                const data = await response.json();
-
-                if (data.status === 'success') {
-                    // Show success message
-                    document.getElementById('successMessage').style.display = 'block';
-                    
-                    // Redirect to login after 2 seconds
-                    setTimeout(() => {
-                        window.location.href = 'login/index.php';
-                    }, 2000);
-                } else {
-                    // Show error message
-                    document.getElementById('emailError').textContent = data.message || 'Registration failed';
-                    document.getElementById('emailError').style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('emailError').textContent = 'An error occurred. Please try again.';
-                document.getElementById('emailError').style.display = 'block';
+                alert("Signup successful!");
+                window.location.href = "https://rizz-yourvercel.vercel.app/index.html";
+            } catch (err) {
+                alert("Signup error: " + err.message);
             }
         });
 
-        function isValidEmail(email) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailRegex.test(email);
-        }
+        // Login
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            try {
+                const result = await signInWithEmailAndPassword(auth, email, password);
+                const user = result.user;
+
+                const formData = new FormData();
+                formData.append("uid", user.uid);
+                formData.append("email", user.email);
+                formData.append("name", user.displayName || "Manual User");
+
+                await fetch(`${API_URL}/login/track-login.php`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                alert("Welcome back!");
+                window.location.href = "https://rizz-yourvercel.vercel.app/index.html";
+            } catch (err) {
+                alert("Login failed: " + err.message);
+            }
+        });
+
+        // Google Login
+        document.getElementById("googleLoginBtn").addEventListener("click", async () => {
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+
+                // Extract names safely
+                const [first_name, ...rest] = user.displayName?.split(" ") ?? ["Google"];
+                const last_name = rest.join(" ") || "";
+
+                // Save user to backend
+                const response = await fetch(`${API_URL}/login/save-user.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    mode: "cors", // ✅ ensure CORS
+                    body: JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        first_name,
+                        last_name
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Backend returned ${response.status}`);
+                }
+
+                const data = await response.json().catch(() => null);
+                console.log("Backend response:", data);
+
+                alert("Google login successful! Welcome " + user.displayName);
+                window.location.href = "https://rizz-yourvercel.vercel.app/index.html";
+
+            } catch (err) {
+                console.error("Google Sign-In Failed:", err);
+                alert("Google login failed: " + err.message);
+            }
+        });
+
     </script>
 </body>
+
 </html>
