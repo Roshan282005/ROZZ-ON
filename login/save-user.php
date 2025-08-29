@@ -10,17 +10,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Database configuration
 $servername = "localhost";
-$username = "root";
-$password = "";
-$database = "login";
+$username   = "root";
+$password   = "";
+$database   = "login";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $database);
-
-// Check connection
 if ($conn->connect_error) {
+    error_log("Database connection failed: " . $conn->connect_error);
     http_response_code(500);
     echo json_encode([
         'status' => 'error',
@@ -29,10 +30,9 @@ if ($conn->connect_error) {
     exit();
 }
 
-// Get JSON input
 $input = json_decode(file_get_contents('php://input'), true);
-
 if (!$input) {
+    error_log("Invalid JSON input: " . file_get_contents('php://input'));
     http_response_code(400);
     echo json_encode([
         'status' => 'error',
@@ -41,8 +41,8 @@ if (!$input) {
     exit();
 }
 
-// Validate required fields
-$required_fields = ['first_name', 'last_name', 'email', 'password'];
+// Required fields for Google users
+$required_fields = ['uid', 'first_name', 'last_name', 'email'];
 foreach ($required_fields as $field) {
     if (empty($input[$field])) {
         http_response_code(400);
@@ -64,65 +64,44 @@ if (!filter_var($input['email'], FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-// Validate password length
-if (strlen($input['password']) < 6) {
-    http_response_code(400);
-    echo json_encode([
-        'status' => 'error',
-        'message' => 'Password must be at least 6 characters long'
-    ]);
-    exit();
-}
-
-// Check if email already exists
-$stmt = $conn->prepare("SELECT id FROM firebase_users WHERE email = ?");
-$stmt->bind_param("s", $input['email']);
+// Check if user already exists
+$stmt = $conn->prepare("SELECT id FROM firebase_users WHERE uid = ? OR email = ?");
+$stmt->bind_param("ss", $input['uid'], $input['email']);
 $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows > 0) {
+    // User already exists → update their info (optional)
     $stmt->close();
-    http_response_code(409);
+    $stmt = $conn->prepare("UPDATE firebase_users SET first_name=?, last_name=? WHERE email=?");
+    $stmt->bind_param("sss", $input['first_name'], $input['last_name'], $input['email']);
+    $stmt->execute();
+
     echo json_encode([
-        'status' => 'error',
-        'message' => 'Email already exists'
+        'status' => 'success',
+        'message' => 'User already exists, updated info',
+        'user' => $input
     ]);
     exit();
 }
 $stmt->close();
 
-// Generate a unique user ID (simulating Firebase UID)
-$uid = uniqid('rizz_', true);
-
-// Hash the password
-$hashed_password = password_hash($input['password'], PASSWORD_DEFAULT);
-
-// Insert new user
-$stmt = $conn->prepare("INSERT INTO firebase_users (uid, email, first_name, last_name, password, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
-$stmt->bind_param("sssss", $uid, $input['email'], $input['first_name'], $input['last_name'], $hashed_password);
+// Insert new Google user (no password)
+$stmt = $conn->prepare("INSERT INTO firebase_users (uid, email, first_name, last_name, created_at) VALUES (?, ?, ?, ?, NOW())");
+$stmt->bind_param("ssss", $input['uid'], $input['email'], $input['first_name'], $input['last_name']);
 
 if ($stmt->execute()) {
-    // Create user session
-    session_start();
-    $_SESSION['user_id'] = $uid;
-    $_SESSION['user_email'] = $input['email'];
-    $_SESSION['user_name'] = $input['first_name'] . ' ' . $input['last_name'];
-    
     echo json_encode([
         'status' => 'success',
-        'message' => 'User registered successfully',
-        'user' => [
-            'uid' => $uid,
-            'email' => $input['email'],
-            'first_name' => $input['first_name'],
-            'last_name' => $input['last_name']
-        ]
+        'message' => 'Google user saved successfully',
+        'user' => $input
     ]);
 } else {
+    error_log("Failed to save user: " . $stmt->error);
     http_response_code(500);
     echo json_encode([
         'status' => 'error',
-        'message' => 'Failed to register user: ' . $stmt->error
+        'message' => 'Failed to save user: ' . $stmt->error
     ]);
 }
 

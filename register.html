@@ -154,7 +154,7 @@
                 });
 
                 alert("Signup successful!");
-                window.location.href = "https://rizz-yourvercel.vercel.app/index.html";
+                window.location.href = "index.html";
             } catch (err) {
                 alert("Signup error: " + err.message);
             }
@@ -181,7 +181,7 @@
                 });
 
                 alert("Welcome back!");
-                window.location.href = "https://rizz-yourvercel.vercel.app/index.html";
+                window.location.href = "index.html";
             } catch (err) {
                 alert("Login failed: " + err.message);
             }
@@ -198,6 +198,12 @@
                 const last_name = rest.join(" ") || "";
 
                 // Save user to backend
+                console.log("Sending user data to backend:", {
+                    uid: user.uid,
+                    email: user.email,
+                    first_name,
+                    last_name
+                });
                 const response = await fetch(`${API_URL}/login/save-user.php`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -210,7 +216,10 @@
                     })
                 });
 
+                console.log("Fetch response status:", response.status);
                 if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Backend error response:", errorText);
                     throw new Error(`Backend returned ${response.status}`);
                 }
 
@@ -218,7 +227,7 @@
                 console.log("Backend response:", data);
 
                 alert("Google login successful! Welcome " + user.displayName);
-                window.location.href = "https://rizz-yourvercel.vercel.app/index.html";
+                window.location.href = "index.html";
 
             } catch (err) {
                 console.error("Google Sign-In Failed:", err);
