@@ -1,3 +1,4 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -61,16 +62,45 @@ menuItems.forEach(item => {
 
 // Google Sign-In button handler
 const googleSignInBtn = document.getElementById("googleSignInBtn");
-if (googleSignInBtn) {
-  googleSignInBtn.addEventListener("click", () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        // You can send user info to your backend here if needed
-        alert(`Welcome, ${user.displayName} (${user.email})`);
-      })
-      .catch((error) => {
-        alert(`Google login failed: ${error.message}`);
+const googleLoginBtn = document.getElementById("googleLoginBtn");
+
+const handleGoogleLogin = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      // Send user info to backend as JSON
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName || "Google User"
+      };
+
+      return fetch("http://localhost/rizz/login/track-login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
       });
-  });
+    })
+    .then((response) => {
+      if (response.ok) {
+        alert(`Welcome, ${user.displayName} (${user.email})`);
+        window.location.href = "index.html";
+      } else {
+        throw new Error("Failed to save user data");
+      }
+    })
+    .catch((error) => {
+      alert(`Google login failed: ${error.message}`);
+      console.error("Google login error:", error);
+    });
+};
+
+if (googleSignInBtn) {
+  googleSignInBtn.addEventListener("click", handleGoogleLogin);
+}
+
+if (googleLoginBtn) {
+  googleLoginBtn.addEventListener("click", handleGoogleLogin);
 }

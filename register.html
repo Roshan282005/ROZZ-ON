@@ -7,11 +7,13 @@
     <title>Login | ℝ𝕀ℤℤ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="src/app.js"></script>
+    <!-- Font Awesome (Fixed with proper CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
-<body aria-required="true" class="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-700 to-indigo-700">
+<body aria-required="true"
+    class="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-700 to-indigo-700">
 
     <!-- Container -->
     <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -20,16 +22,16 @@
         <!-- LOGIN FORM -->
         <form id="loginForm" class="space-y-4">
             <div class="relative">
-                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="email" id="loginEmail" placeholder="Email" required
                     class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
-                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="password" id="loginPassword" placeholder="Password" required
                     class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
-                <i class="fas fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer opacity-70"
+                <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
                     id="toggleLoginPassword"></i>
             </div>
 
@@ -39,7 +41,8 @@
             <!-- Google Login Button -->
             <button id="googleLoginBtn" type="button"
                 class="w-full mt-4 bg-white border border-gray-300 rounded-lg py-2 flex items-center justify-center hover:bg-gray-100 transition">
-                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="w-6 h-6 mr-2" />
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo"
+                    class="w-6 h-6 mr-2" />
                 <span class="text-gray-700 font-medium">Sign in with Google</span>
             </button>
         </form>
@@ -51,28 +54,28 @@
         <!-- REGISTER FORM (Hidden Initially) -->
         <form id="registerForm" class="space-y-4 hidden mt-6">
             <div class="relative">
-                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="text" id="fName" placeholder="First Name" required
                     class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
-                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-user absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="text" id="lName" placeholder="Last Name" required
                     class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
-                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-envelope absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="email" id="registerEmail" placeholder="Email" required
                     class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
-                <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
                 <input type="password" id="registerPassword" placeholder="Password" required
                     class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
-                <i class="fas fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer opacity-70"
+                <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer"
                     id="toggleRegisterPassword"></i>
             </div>
 
@@ -94,14 +97,17 @@
         import {
             getAuth,
             createUserWithEmailAndPassword,
-            signInWithEmailAndPassword
+            signInWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDoIAiSnBx8GGNhQkEB7j1bANx7k2l8dc",
+            apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
             authDomain: "rizzauthapp.firebaseapp.com",
+            databaseURL: "https://rizzauthapp-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "rizzauthapp",
-            storageBucket: "rizzauthapp.appspot.com",
+            storageBucket: "rizzauthapp.firebasestorage.app",
             messagingSenderId: "607508317395",
             appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
             measurementId: "G-2YQFBWK95F"
@@ -169,20 +175,29 @@
                 const result = await signInWithEmailAndPassword(auth, email, password);
                 const user = result.user;
 
-                const formData = new FormData();
-                formData.append("uid", user.uid);
-                formData.append("email", user.email);
-                formData.append("name", user.displayName || "Manual User");
+                const userData = {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName || "Manual User"
+                };
 
-                await fetch(`${API_URL}/login/track-login.php`, {
+                const response = await fetch(`${API_URL}/login/track-login.php`, {
                     method: "POST",
-                    body: formData
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
                 });
 
-                alert("Welcome back!");
-                window.location.href = "index.html";
+                if (response.ok) {
+                    alert("Welcome back!");
+                    window.location.href = "index.html";
+                } else {
+                    throw new Error("Failed to save user data");
+                }
             } catch (err) {
                 alert("Login failed: " + err.message);
+                console.error("Login error:", err);
             }
         });
 
@@ -193,20 +208,29 @@
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
 
-                const formData = new FormData();
-                formData.append("uid", user.uid);
-                formData.append("email", user.email);
-                formData.append("name", user.displayName || "Google User");
+                const userData = {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName || "Google User"
+                };
 
-                await fetch(`${API_URL}/login/track-login.php`, {
+                const response = await fetch(`${API_URL}/login/track-login.php`, {
                     method: "POST",
-                    body: formData
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(userData)
                 });
 
-                alert("Welcome, " + user.displayName);
-                window.location.href = "index.html";
+                if (response.ok) {
+                    alert("Welcome, " + user.displayName);
+                    window.location.href = "index.html";
+                } else {
+                    throw new Error("Failed to save user data");
+                }
             } catch (err) {
                 alert("Google login failed: " + err.message);
+                console.error("Google login error:", err);
             }
         });
     </script>
