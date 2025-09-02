@@ -1,0 +1,104 @@
+<!-- Firebase -->
+    <script type="module">
+        // Change API_URL to local backend for testing
+        const API_URL = "http://localhost/rizz"; // Updated to local backend URL
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDoIAiSnBx8GGNhQkEB7j1bANx7k2l8dc",
+            authDomain: "rizzauthapp.firebaseapp.com",
+            projectId: "rizzauthapp",
+            storageBucket: "rizzauthapp.appspot.com",
+            messagingSenderId: "607508317395",
+            appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
+            measurementId: "G-2YQFBWK95F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Toggle forms
+        window.toggleForm = function () {
+            document.getElementById("loginForm").classList.toggle("hidden");
+            document.getElementById("registerForm").classList.toggle("hidden");
+        };
+
+        // Toggle password visibility
+        function setupPasswordToggle(toggleId, inputId) {
+            const toggle = document.getElementById(toggleId);
+            const input = document.getElementById(inputId);
+            toggle.addEventListener("click", () => {
+                input.type = input.type === "password" ? "text" : "password";
+                toggle.classList.toggle("fa-eye-slash");
+            });
+        }
+        setupPasswordToggle("toggleLoginPassword", "loginPassword");
+        setupPasswordToggle("toggleRegisterPassword", "registerPassword");
+
+        // Register
+        document.getElementById("registerForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const fName = document.getElementById("fName").value;
+            const lName = document.getElementById("lName").value;
+            const email = document.getElementById("registerEmail").value;
+            const password = document.getElementById("registerPassword").value;
+
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                const user = result.user;
+
+                await fetch(`${API_URL}/login/signup.php`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        uid: user.uid,
+                        email,
+                        first_name: fName,
+                        last_name: lName,
+                        password: password
+                    })
+                });
+
+                alert("Signup successful!");
+                window.location.href = "index.html";
+            } catch (err) {
+                alert("Signup error: " + err.message);
+            }
+        });
+
+        // Login
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            try {
+                const result = await signInWithEmailAndPassword(auth, email, password);
+                const user = result.user;
+
+                const formData = new FormData();
+                formData.append("uid", user.uid);
+                formData.append("email", user.email);
+                formData.append("name", user.displayName || "Manual User");
+
+                await fetch(`${API_URL}/login/track-login.php`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                alert("Welcome back!");
+                window.location.href = "index.html";
+            } catch (err) {
+                alert("Login failed: " + err.message);
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 $host = '127.0.0.1';
 $user = 'root';
 $pass = '';
-$db   = 'your_database_name'; // Replace with your actual database name
+$db   = 'login'; // Database name from schema
 
 $conn = new mysqli($host, $user, $pass, $db);
 

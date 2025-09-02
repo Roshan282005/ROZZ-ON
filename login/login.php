@@ -148,6 +148,12 @@ $clear_attempts->bind_param("s", $input['email']);
 $clear_attempts->execute();
 $clear_attempts->close();
 
+// Update login_count and last_login
+$update_login = $conn->prepare("UPDATE firebase_users SET login_count = login_count + 1, last_login = NOW() WHERE email = ?");
+$update_login->bind_param("s", $input['email']);
+$update_login->execute();
+$update_login->close();
+
 // Create user session
 $_SESSION['user_id'] = $uid;
 $_SESSION['user_email'] = $input['email'];

@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Login | ℝ𝕀ℤℤ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
-<body class="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-700 to-indigo-700">
+<body aria-required="true" class="flex items-center justify-center min-h-screen bg-gradient-to-r from-purple-700 to-indigo-700">
 
     <!-- Container -->
     <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
@@ -22,13 +22,13 @@
             <div class="relative">
                 <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 <input type="email" id="loginEmail" placeholder="Email" required
-                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
                 <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 <input type="password" id="loginPassword" placeholder="Password" required
-                    class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
                 <i class="fas fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer opacity-70"
                     id="toggleLoginPassword"></i>
             </div>
@@ -36,10 +36,11 @@
             <button type="submit"
                 class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">Login</button>
 
-            <!-- Google Login -->
-            <button type="button" id="googleLoginBtn"
-                class="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 flex items-center justify-center">
-                <i class="fab fa-google mr-2"></i> Sign in with Google
+            <!-- Google Login Button -->
+            <button id="googleLoginBtn" type="button"
+                class="w-full mt-4 bg-white border border-gray-300 rounded-lg py-2 flex items-center justify-center hover:bg-gray-100 transition">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" class="w-6 h-6 mr-2" />
+                <span class="text-gray-700 font-medium">Sign in with Google</span>
             </button>
         </form>
 
@@ -52,25 +53,25 @@
             <div class="relative">
                 <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 <input type="text" id="fName" placeholder="First Name" required
-                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
                 <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 <input type="text" id="lName" placeholder="Last Name" required
-                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
                 <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 <input type="email" id="registerEmail" placeholder="Email" required
-                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
             </div>
 
             <div class="relative">
                 <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                 <input type="password" id="registerPassword" placeholder="Password" required
-                    class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none">
+                    class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none" />
                 <i class="fas fa-eye absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer opacity-70"
                     id="toggleRegisterPassword"></i>
             </div>
@@ -93,13 +94,11 @@
         import {
             getAuth,
             createUserWithEmailAndPassword,
-            signInWithEmailAndPassword,
-            GoogleAuthProvider,
-            signInWithPopup
+            signInWithEmailAndPassword
         } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
+            apiKey: "AIzaSyDoIAiSnBx8GGNhQkEB7j1bANx7k2l8dc",
             authDomain: "rizzauthapp.firebaseapp.com",
             projectId: "rizzauthapp",
             storageBucket: "rizzauthapp.appspot.com",
@@ -110,7 +109,6 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
 
         // Toggle forms
         window.toggleForm = function () {
@@ -149,7 +147,8 @@
                         uid: user.uid,
                         email,
                         first_name: fName,
-                        last_name: lName
+                        last_name: lName,
+                        password: password
                     })
                 });
 
@@ -190,51 +189,26 @@
         // Google Login
         document.getElementById("googleLoginBtn").addEventListener("click", async () => {
             try {
+                const provider = new GoogleAuthProvider();
                 const result = await signInWithPopup(auth, provider);
                 const user = result.user;
 
-                // Extract names safely
-                const [first_name, ...rest] = user.displayName?.split(" ") ?? ["Google"];
-                const last_name = rest.join(" ") || "";
+                const formData = new FormData();
+                formData.append("uid", user.uid);
+                formData.append("email", user.email);
+                formData.append("name", user.displayName || "Google User");
 
-                // Save user to backend
-                console.log("Sending user data to backend:", {
-                    uid: user.uid,
-                    email: user.email,
-                    first_name,
-                    last_name
-                });
-                const response = await fetch(`${API_URL}/login/save-user.php`, {
+                await fetch(`${API_URL}/login/track-login.php`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    mode: "cors", // ✅ ensure CORS
-                    body: JSON.stringify({
-                        uid: user.uid,
-                        email: user.email,
-                        first_name,
-                        last_name
-                    })
+                    body: formData
                 });
 
-                console.log("Fetch response status:", response.status);
-                if (!response.ok) {
-                    const errorText = await response.text();
-                    console.error("Backend error response:", errorText);
-                    throw new Error(`Backend returned ${response.status}`);
-                }
-
-                const data = await response.json().catch(() => null);
-                console.log("Backend response:", data);
-
-                alert("Google login successful! Welcome " + user.displayName);
+                alert("Welcome, " + user.displayName);
                 window.location.href = "index.html";
-
             } catch (err) {
-                console.error("Google Sign-In Failed:", err);
                 alert("Google login failed: " + err.message);
             }
         });
-
     </script>
 </body>
 

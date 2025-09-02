@@ -71,15 +71,15 @@ $stmt->execute();
 $stmt->store_result();
 
 if ($stmt->num_rows > 0) {
-    // User already exists → update their info (optional)
+    // User already exists → update their info and login tracking
     $stmt->close();
-    $stmt = $conn->prepare("UPDATE firebase_users SET first_name=?, last_name=? WHERE email=?");
+    $stmt = $conn->prepare("UPDATE firebase_users SET first_name=?, last_name=?, last_login=NOW(), login_count=login_count+1 WHERE email=?");
     $stmt->bind_param("sss", $input['first_name'], $input['last_name'], $input['email']);
     $stmt->execute();
 
     echo json_encode([
         'status' => 'success',
-        'message' => 'User already exists, updated info',
+        'message' => 'User already exists, updated info and login tracking',
         'user' => $input
     ]);
     exit();
@@ -87,7 +87,7 @@ if ($stmt->num_rows > 0) {
 $stmt->close();
 
 // Insert new Google user (no password)
-$stmt = $conn->prepare("INSERT INTO firebase_users (uid, email, first_name, last_name, created_at) VALUES (?, ?, ?, ?, NOW())");
+$stmt = $conn->prepare("INSERT INTO firebase_users (uid, email, first_name, last_name, login_count, last_login, created_at) VALUES (?, ?, ?, ?, 1, NOW(), NOW())");
 $stmt->bind_param("ssss", $input['uid'], $input['email'], $input['first_name'], $input['last_name']);
 
 if ($stmt->execute()) {
