@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,8 @@
     <!-- Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
@@ -27,7 +29,7 @@
             background: white;
             padding: 2rem;
             border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
         }
@@ -137,6 +139,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-header">
@@ -173,10 +176,17 @@
         </div>
     </div>
 
+    <button id="googleSignInBtn"
+        style="margin-top: 1rem; width: 100%; padding: 12px; font-size: 1rem; border-radius: 8px; border: none; background-color: #4285F4; color: white; cursor: pointer;">
+        <i class="fab fa-google" style="margin-right: 8px;"></i> Sign in with Google
+    </button>
+
+    <script type="module" src="src/app.js"></script>
+
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
             e.preventDefault();
-            
+
             // Reset error messages
             const errorElements = document.querySelectorAll('.error-message');
             errorElements.forEach(el => {
@@ -227,7 +237,7 @@
                 if (data.status === 'success') {
                     // Show success message
                     document.getElementById('successMessage').style.display = 'block';
-                    
+
                     // Redirect to dashboard after 2 seconds
                     setTimeout(() => {
                         window.location.href = 'dashboard.php';
@@ -250,4 +260,5 @@
         }
     </script>
 </body>
+
 </html>

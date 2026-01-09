@@ -140,17 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <input type="submit" class="btn" value="Sign Up" name="signUp">
     </form>
     <p class="or">Or</p>
-    <div class="icons">
-      <i id="googleSignUpBtn" class="fab fa-google"></i><br>
-      <span style="font-family: 'Product Sans', sans-serif;">
-        <span style="color: #4285F4;">G</span>
-        <span style="color: #EA4335;">o</span>
-        <span style="color: #FBBC05;">o</span>
-        <span style="color: #4285F4;">g</span>
-        <span style="color: #34A853;">l</span>
-        <span style="color: #EA4335;">e</span>
-      </span>
-    </div>
+    
     <div class="links">
       <p style="color: rgb(59, 59, 255);">Already Have Account?</p>
       <button id="showSignIn" type="button" class="btn">Sign In</button>

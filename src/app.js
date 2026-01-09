@@ -1,20 +1,26 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-// Firebase configuration
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
-    authDomain: "rizzauthapp.firebaseapp.com",
-    projectId: "rizzauthapp",
-    storageBucket: "rizzauthapp.appspot.com",
-    messagingSenderId: "607508317395",
-    appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
-    measurementId: "G-2YQFBWK95F"
+  apiKey: "AIzaSyDoIAiSnBx8GGNhjQkEB7j1bANx7k2l8dc",
+  authDomain: "rizzauthapp.firebaseapp.com",
+  databaseURL: "https://rizzauthapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "rizzauthapp",
+  storageBucket: "rizzauthapp.firebasestorage.app",
+  messagingSenderId: "607508317395",
+  appId: "1:607508317395:web:f2f403d10915d6d2ef4026",
+  measurementId: "G-2YQFBWK95F"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 const hamMenu = document.querySelector(".ham-menu");
 const offScreenMenu = document.querySelector(".off-screen-menu");
@@ -53,3 +59,48 @@ menuItems.forEach(item => {
     offScreenMenu.classList.remove("active");
   });
 });
+
+// Google Sign-In button handler
+const googleSignInBtn = document.getElementById("googleSignInBtn");
+const googleLoginBtn = document.getElementById("googleLoginBtn");
+
+const handleGoogleLogin = () => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const user = result.user;
+      // Send user info to backend as JSON
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName || "Google User"
+      };
+
+      return fetch("http://localhost/rizz/login/track-login.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(userData)
+      });
+    })
+    .then((response) => {
+      if (response.ok) {
+        alert(`Welcome, ${user.displayName} (${user.email})`);
+        window.location.href = "index.html";
+      } else {
+        throw new Error("Failed to save user data");
+      }
+    })
+    .catch((error) => {
+      alert(`Google login failed: ${error.message}`);
+      console.error("Google login error:", error);
+    });
+};
+
+if (googleSignInBtn) {
+  googleSignInBtn.addEventListener("click", handleGoogleLogin);
+}
+
+if (googleLoginBtn) {
+  googleLoginBtn.addEventListener("click", handleGoogleLogin);
+}
